@@ -36,7 +36,7 @@ namespace Learn.Web.Controllers
                     if (action.ToUpper() != "Login".ToUpper() && action.ToUpper() != "CodePreviewJson".ToUpper())
                     {
                         TData obj = new TData();
-                        obj.Msg = "演示模式，不允许操作";
+                        obj.msg = "演示模式，不允许操作";
                         context.Result = new CustomJsonResult { Value = obj };
                         return;
                     }
@@ -168,19 +168,19 @@ namespace Learn.Web.Controllers
         {
             string action = this.ControllerContext.RouteData.Values["Action"].ParseToString();
             TData obj = data as TData;
-            if (obj != null && string.IsNullOrEmpty(obj.Msg))
+            if (obj != null && string.IsNullOrEmpty(obj.msg))
             {
                 if (action.Contains("Delete"))
                 {
-                    obj.Msg = "删除成功";
+                    obj.msg = "删除成功";
                 }
                 else if (action.Contains("Save"))
                 {
-                    obj.Msg = "保存成功";
+                    obj.msg = "保存成功";
                 }
                 else
                 {
-                    obj.Msg = "操作成功";
+                    obj.msg = "操作成功";
                 }
             }
         }
@@ -194,8 +194,8 @@ namespace Learn.Web.Controllers
         protected virtual ActionResult Success(string message)
         {
             TData obj = new TData();
-            obj.Tag = RequestTypeEnum.Success;
-            obj.Msg = message;
+            obj.code = RequestTypeEnum.Success;
+            obj.msg = message;
             return Json(obj); 
         }
         /// <summary>
@@ -208,9 +208,9 @@ namespace Learn.Web.Controllers
         {
 
             TData obj = new TData();
-            obj.Tag = RequestTypeEnum.Success;
-            obj.Msg = message;
-            obj.Data = data;
+            obj.code = RequestTypeEnum.Success;
+            obj.msg = message;
+            obj.data = data;
             return Json(obj); 
         }
         /// <summary>
@@ -221,8 +221,8 @@ namespace Learn.Web.Controllers
         protected virtual ActionResult Error(string message)
         {
             TData obj = new TData();
-            obj.Tag = RequestTypeEnum.Error;
-            obj.Msg = message; 
+            obj.code = RequestTypeEnum.Error;
+            obj.msg = message; 
             return Json(obj);
         }
         /// <summary>
@@ -233,8 +233,8 @@ namespace Learn.Web.Controllers
         protected virtual ActionResult Fail(string message)
         {
             TData obj = new TData();
-            obj.Tag = RequestTypeEnum.Fail;
-            obj.Msg = message;
+            obj.code = RequestTypeEnum.Fail;
+            obj.msg = message;
             return Json(obj);
         }
     }

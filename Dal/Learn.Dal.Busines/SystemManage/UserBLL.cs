@@ -23,18 +23,18 @@ namespace Learn.Dal.Busines.SystemManage
         public async Task<TData<UserEntity>> GetEntity(string id)
         {
             TData<UserEntity> obj = new TData<UserEntity>();
-            obj.Result = await userService.GetBaseEntity(id);  
-            obj.Tag = RequestTypeEnum.Success;
+            obj.data = await userService.GetBaseEntity(id);  
+            obj.code = RequestTypeEnum.Success;
             return obj;
         }
 
         public async Task<TData<UserEntity>> CheckLogin(string userName, string password, int platform=1)
         {
             TData<UserEntity> obj = new TData<UserEntity>();
-            obj.Tag = RequestTypeEnum.Error;
+            obj.code = RequestTypeEnum.Error;
             if (userName.IsEmpty() || password.IsEmpty())
             {
-                obj.Msg = "用户名或密码不能为空";
+                obj.msg = "用户名或密码不能为空";
                 return obj;
             }
             UserEntity user = await userService.CheckLogin(userName);
@@ -75,23 +75,23 @@ namespace Learn.Dal.Busines.SystemManage
                         }
                         //await GetUserBelong(user);
 
-                        obj.Result = user;
-                        obj.Msg = "登录成功";
-                        obj.Tag = RequestTypeEnum.Success;
+                        obj.data = user;
+                        obj.msg = "登录成功";
+                        obj.code = RequestTypeEnum.Success;
                     }
                     else
                     {
-                        obj.Msg = "密码不正确，请重新输入";
+                        obj.msg = "密码不正确，请重新输入";
                     }
                 }
                 else
                 {
-                    obj.Msg = "账号被禁用，请联系管理员";
+                    obj.msg = "账号被禁用，请联系管理员";
                 }
             }
             else
             {
-                obj.Msg = "账号不存在，请重新输入";
+                obj.msg = "账号不存在，请重新输入";
             }
             return obj;
         }
@@ -103,7 +103,7 @@ namespace Learn.Dal.Busines.SystemManage
             TData obj = new TData();
             await userService.UpdateUser(entity);
 
-            obj.Tag = RequestTypeEnum.Success;
+            obj.code = RequestTypeEnum.Success;
             return obj;
         }
         #endregion

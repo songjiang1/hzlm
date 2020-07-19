@@ -23,10 +23,10 @@ namespace Learn.Web.Controllers
             if (context.HttpContext.Request.IsAjaxRequest())
             {
                 TData obj = new TData();
-                obj.Msg = context.Exception.GetOriginalException().Message;
-                if (string.IsNullOrEmpty(obj.Msg))
+                obj.msg = context.Exception.GetOriginalException().Message;
+                if (string.IsNullOrEmpty(obj.msg))
                 {
-                    obj.Msg = "抱歉，系统错误，请联系管理员！";
+                    obj.msg = "抱歉，系统错误，请联系管理员！";
                 }
                 context.Result = new CustomJsonResult { Value = obj };
                 context.ExceptionHandled = true;

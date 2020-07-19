@@ -20,8 +20,8 @@ namespace Learn.Dal.Busines.SystemManage
         public async Task<TData<LogEntity>> GetEntity(string id)
         {
             TData<LogEntity> obj = new TData<LogEntity>();
-            obj.Result = await _service.GetBaseEntity(id);  
-            obj.Tag = RequestTypeEnum.Success;
+            obj.data = await _service.GetBaseEntity(id);  
+            obj.code = RequestTypeEnum.Success;
             return obj;
         }
         public async Task<TData<List<LogEntity>>> GetPageList(Pagination pagination,string queryJson)
@@ -65,9 +65,9 @@ namespace Learn.Dal.Busines.SystemManage
             #endregion
 
             TData<List<LogEntity>> obj = new TData<List<LogEntity>>();
-            obj.Result = await _service.GetBasePageList(expression, pagination);
-            obj.TotalCount = pagination.TotalCount;
-            obj.Tag = RequestTypeEnum.Success;
+            obj.data = await _service.GetBasePageList(expression, pagination);
+            obj.totalCount = pagination.TotalCount;
+            obj.code = RequestTypeEnum.Success;
             return obj;
         }
 
