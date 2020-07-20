@@ -13,8 +13,19 @@ namespace Learn.Util.Enum
         //命名规范：系统通用操作除外，其他的按照 模块或类型_名称，如：登录_用户被限制登录 命名为“ Login_AccountLimitLogin”
         #region 系统通用操作  
         [Description("请求成功")]
-         OK = 200,  
+        OK = 200,
+        [Description("请求成功")]
+        None = 0,
+        [Description("请求失败")]
+        Error = 404,
+        [Description("接口错误")]
+        InterfaceError = 201,
+        [Description("没有登录或登录已超时")]
+        LoginInvalid = 202,
         [Description("查询成功")]
+        NoAuthority = 203,
+        [Description("抱歉，没有权限，请联系管理员")] 
+        
         LookSuccess = 211,
         [Description("添加成功")]
         InsertSuccess = 212,
@@ -44,6 +55,11 @@ namespace Learn.Util.Enum
         #endregion
 
         #region 登录 
+
+        [Description("用户名不能为空")]
+        Login_AccountEmpty = 2300,
+        [Description("密码不能为空")]
+        Login_AccountPasswordEmpty = 2300,
         [Description("用户不存在")]
         Login_AccountNotExist = 2302,
         [Description("密码错误，请重新输入")]

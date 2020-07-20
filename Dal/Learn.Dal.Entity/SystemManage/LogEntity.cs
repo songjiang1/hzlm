@@ -116,7 +116,7 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 执行结果状态
         /// </summary>
-        public RequestTypeEnum execute_result { get ; set ; }
+        public HttpCodeEnum execute_result { get ; set ; }
 
        
         /// <summary>

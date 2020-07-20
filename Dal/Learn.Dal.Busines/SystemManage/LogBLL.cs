@@ -21,7 +21,7 @@ namespace Learn.Dal.Busines.SystemManage
         {
             TData<LogEntity> obj = new TData<LogEntity>();
             obj.data = await _service.GetBaseEntity(id);  
-            obj.code = RequestTypeEnum.Success;
+            obj.code = HttpCodeEnum.OK;
             return obj;
         }
         public async Task<TData<List<LogEntity>>> GetPageList(Pagination pagination,string queryJson)
@@ -67,7 +67,7 @@ namespace Learn.Dal.Busines.SystemManage
             TData<List<LogEntity>> obj = new TData<List<LogEntity>>();
             obj.data = await _service.GetBasePageList(expression, pagination);
             obj.totalCount = pagination.TotalCount;
-            obj.code = RequestTypeEnum.Success;
+            obj.code = HttpCodeEnum.OK;
             return obj;
         }
 

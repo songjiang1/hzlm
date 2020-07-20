@@ -12,7 +12,8 @@ using Learn.Util.Extension;
 using Learn.Util;
 using Learn.Util.Model;
 using Learn.Web.Code;
-using Learn.Util.Enum; 
+using Learn.Util.Enum;
+using Learn.Dal.Entity.BaseManage;
 
 namespace Learn.Web.Controllers
 {
@@ -29,25 +30,25 @@ namespace Learn.Web.Controllers
             string action = context.RouteData.Values["Action"].ParseToString();
             OperatorInfo user = await Operator.Instance.Current();
 
-            if (GlobalContext.SystemConfig.Demo)
-            {
-                if (context.HttpContext.Request.Method.ToUpper() == "POST")
-                {
-                    if (action.ToUpper() != "Login".ToUpper() && action.ToUpper() != "CodePreviewJson".ToUpper())
-                    {
-                        TData obj = new TData();
-                        obj.msg = "演示模式，不允许操作";
-                        context.Result = new CustomJsonResult { Value = obj };
-                        return;
-                    }
-                }
-            }
+            //if (GlobalContext.SystemConfig.Demo)
+            //{
+            //    if (context.HttpContext.Request.Method.ToUpper() == "POST")
+            //    {
+            //        if (action.ToUpper() != "Login".ToUpper() && action.ToUpper() != "CodePreviewJson".ToUpper())
+            //        {
+            //            TData obj = new TData();
+            //            obj.msg = "演示模式，不允许操作";
+            //            context.Result = new CustomJsonResult { Value = obj };
+            //            return;
+            //        }
+            //    }
+            //}
 
             var resultContext = await next();
 
             sw.Stop();
             string ip = NetHelper.Ip;
-            //LogOperateEntity operateEntity = new LogOperateEntity();
+            LogEntity operateEntity = new LogEntity();
             var areaName = context.RouteData.DataTokens["area"] + "/";
             var controllerName = context.RouteData.Values["controller"] + "/";
             string currentUrl = "/" + areaName + controllerName + action;
@@ -58,7 +59,7 @@ namespace Learn.Web.Controllers
                 switch (context.HttpContext.Request.Method.ToUpper())
                 {
                     case "GET":
-                        //operateEntity.ExecuteParam = context.HttpContext.Request.QueryString.Value.ParseToString();
+                        operateEntity.execute_param = context.HttpContext.Request.QueryString.Value.ParseToString();
                         break;
 
                     case "POST":
@@ -87,12 +88,12 @@ namespace Learn.Web.Controllers
                         }
                         if (param.Count > 0)
                         {
-                            //operateEntity.ExecuteUrl += context.HttpContext.Request.QueryString.Value.ParseToString();
-                            //operateEntity.ExecuteParam = TextHelper.GetSubString(JsonConvert.SerializeObject(param), 8000);
+                            operateEntity.execute_url += context.HttpContext.Request.QueryString.Value.ParseToString();
+                            operateEntity.execute_param = TextHelper.GetSubString(JsonConvert.SerializeObject(param), 8000);
                         }
                         else
                         {
-                            //operateEntity.ExecuteParam = context.HttpContext.Request.QueryString.Value.ParseToString();
+                            operateEntity.execute_param = context.HttpContext.Request.QueryString.Value.ParseToString();
                         }
                         break;
                 }
@@ -148,44 +149,11 @@ namespace Learn.Web.Controllers
             base.OnActionExecuted(context);
         }
 
-        /// <summary>
-        /// 覆盖基类的Json方法，用来自定义序列化实体，比如把long类型转成字符串返回到前端
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public new CustomJsonResult Json(object data)
-        {
-            SetTDataMessage(data);
-
-            return new CustomJsonResult
-            {
-                Value = data
-            };
-        }
-
-        #region 根据action方法名赋值合适的message
-        private void SetTDataMessage(object data)
-        {
-            string action = this.ControllerContext.RouteData.Values["Action"].ParseToString();
-            TData obj = data as TData;
-            if (obj != null && string.IsNullOrEmpty(obj.msg))
-            {
-                if (action.Contains("Delete"))
-                {
-                    obj.msg = "删除成功";
-                }
-                else if (action.Contains("Save"))
-                {
-                    obj.msg = "保存成功";
-                }
-                else
-                {
-                    obj.msg = "操作成功";
-                }
-            }
-        }
-        #endregion
+        
        
+        #region action 返回
+        
+
         /// <summary>
         /// 返回成功消息
         /// </summary>
@@ -194,9 +162,9 @@ namespace Learn.Web.Controllers
         protected virtual ActionResult Success(string message)
         {
             TData obj = new TData();
-            obj.code = RequestTypeEnum.Success;
+            obj.code = HttpCodeEnum.OK;
             obj.msg = message;
-            return Json(obj); 
+            return Json(obj);
         }
         /// <summary>
         /// 返回成功消息
@@ -208,21 +176,9 @@ namespace Learn.Web.Controllers
         {
 
             TData obj = new TData();
-            obj.code = RequestTypeEnum.Success;
+            obj.code = HttpCodeEnum.OK;
             obj.msg = message;
             obj.data = data;
-            return Json(obj); 
-        }
-        /// <summary>
-        /// Error
-        /// </summary>
-        /// <param name="message">消息</param>
-        /// <returns></returns>
-        protected virtual ActionResult Error(string message)
-        {
-            TData obj = new TData();
-            obj.code = RequestTypeEnum.Error;
-            obj.msg = message; 
             return Json(obj);
         }
         /// <summary>
@@ -230,40 +186,43 @@ namespace Learn.Web.Controllers
         /// </summary>
         /// <param name="message">消息</param>
         /// <returns></returns>
-        protected virtual ActionResult Fail(string message)
+        protected virtual ActionResult Error(HttpCodeEnum code, string msg = "")
         {
             TData obj = new TData();
-            obj.code = RequestTypeEnum.Fail;
-            obj.msg = message;
+            obj.code = code;
+            obj.msg = string.IsNullOrWhiteSpace(msg) ? msg.ParseToEnumDescribe() : msg;
             return Json(obj);
-        }
+        } 
+        #endregion
+
+
     }
 
-    public class CustomJsonResult : JsonResult
-    {
-        public CustomJsonResult() : base(string.Empty)
-        { }
+    //public class CustomJsonResult : JsonResult
+    //{
+    //    public CustomJsonResult() : base(string.Empty)
+    //    { }
 
-        public override void ExecuteResult(ActionContext context)
-        {
-            this.ContentType = "text/json;charset=utf-8;";
+    //    public override void ExecuteResult(ActionContext context)
+    //    {
+    //        this.ContentType = "text/json;charset=utf-8;";
 
-            JsonSerializerSettings jsonSerizlizerSetting = new JsonSerializerSettings();
-            jsonSerizlizerSetting.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+    //        JsonSerializerSettings jsonSerizlizerSetting = new JsonSerializerSettings();
+    //        jsonSerizlizerSetting.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
-            string json = JsonConvert.SerializeObject(Value, Formatting.None, jsonSerizlizerSetting);
-            Value = json;
-            base.ExecuteResult(context);
-        }
+    //        string json = JsonConvert.SerializeObject(Value, Formatting.None, jsonSerizlizerSetting);
+    //        Value = json;
+    //        base.ExecuteResult(context);
+    //    }
 
-        public override Task ExecuteResultAsync(ActionContext context)
-        {
-            this.ContentType = "text/json;charset=utf-8;"; 
-            JsonSerializerSettings jsonSerizlizerSetting = new JsonSerializerSettings();
-            jsonSerizlizerSetting.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; 
-            string json = JsonConvert.SerializeObject(Value, Formatting.None, jsonSerizlizerSetting);
-            Value = json.ToJObject();
-            return base.ExecuteResultAsync(context);
-        }
-    }
+    //    public override Task ExecuteResultAsync(ActionContext context)
+    //    {
+    //        this.ContentType = "text/json;charset=utf-8;"; 
+    //        JsonSerializerSettings jsonSerizlizerSetting = new JsonSerializerSettings();
+    //        jsonSerizlizerSetting.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; 
+    //        string json = JsonConvert.SerializeObject(Value, Formatting.None, jsonSerizlizerSetting);
+    //        Value = json.ToJObject();
+    //        return base.ExecuteResultAsync(context);
+    //    }
+    //}
 }

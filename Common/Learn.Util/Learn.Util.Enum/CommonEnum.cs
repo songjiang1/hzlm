@@ -87,19 +87,7 @@ namespace Learn.Util.Enum
         [Description("支付失败(其他原因，如银行返回失败)")]
         PayError = 7
     }
-    public enum RequestTypeEnum
-    {
-
-        [Description("成功")]
-        Success = 200,
-
-        [Description("系统错误")]
-        Error = 404,
-
-        [Description("请求错误")]
-        Fail = 0
-
-    }
+   
     /// <summary>
     /// 操作类型
     /// </summary>
@@ -259,7 +247,17 @@ namespace Learn.Util.Enum
         Form = 4
 
     }
-
+    public enum LoginMode
+    { 
+        [Description("用户授权模式")]
+        Enforce,
+        [Description("忽略")]
+        Ignore,
+        [Description("指定用户")]
+        AppointUser,
+        [Description("指定角色")]
+        AppointRole,
+    }
 
 
 

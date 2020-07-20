@@ -10,7 +10,7 @@ namespace Learn.Util.Model
         /// <summary>
         /// 操作结果，code为200代表成功，0代表失败，其他的验证返回结果，可根据需要设置
         /// </summary>
-        public RequestTypeEnum code { get; set; }
+        public HttpCodeEnum code { get; set; }
 
         /// <summary>
         /// 提示信息或异常信息

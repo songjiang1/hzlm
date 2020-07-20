@@ -84,5 +84,40 @@ namespace Learn.Util.Extension
             return description;
         }
         #endregion
+
+        #region 枚举相关
+        /// <summary>
+        /// 获取枚举 描述
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static string ParseToEnumDescribe(this object obj)
+        {
+            try
+            {
+                if (obj == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    //Enum.IsDefined(obj.GetType(), obj); 
+                    if (obj.GetType().IsEnum)
+                    {
+                        return GetDescription((System.Enum)obj);
+                    }
+                    if (obj is string)
+                    {
+                        return obj.ToString();
+                    }
+                    return string.Empty;
+                }
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+        #endregion
     }
 }

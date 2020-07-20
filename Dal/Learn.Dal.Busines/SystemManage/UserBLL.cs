@@ -24,17 +24,21 @@ namespace Learn.Dal.Busines.SystemManage
         {
             TData<UserEntity> obj = new TData<UserEntity>();
             obj.data = await userService.GetBaseEntity(id);  
-            obj.code = RequestTypeEnum.Success;
+            obj.code = HttpCodeEnum.OK;
             return obj;
         }
 
         public async Task<TData<UserEntity>> CheckLogin(string userName, string password, int platform=1)
         {
             TData<UserEntity> obj = new TData<UserEntity>();
-            obj.code = RequestTypeEnum.Error;
-            if (userName.IsEmpty() || password.IsEmpty())
+            if (userName.IsEmpty())
+            { 
+                obj.code = HttpCodeEnum.Login_AccountEmpty;
+                return obj;
+            }
+            if (password.IsEmpty())
             {
-                obj.msg = "用户名或密码不能为空";
+                obj.code = HttpCodeEnum.Login_AccountPasswordEmpty;
                 return obj;
             }
             UserEntity user = await userService.CheckLogin(userName);
@@ -47,10 +51,7 @@ namespace Learn.Dal.Busines.SystemManage
                     {
                         user.logon_count= user.logon_count.ParseToInt()+1;
                         user.user_online = true; 
-                        user.last_visit = DateTime.Now;  
-                        
-                         
-
+                        user.last_visit = DateTime.Now; 
                         switch (platform)
                         {
                             case (int)PlatformEnum.Web:
@@ -73,11 +74,9 @@ namespace Learn.Dal.Busines.SystemManage
                                 user.token = Md5Helper.GetGuid();
                                 break;
                         }
-                        //await GetUserBelong(user);
-
                         obj.data = user;
                         obj.msg = "登录成功";
-                        obj.code = RequestTypeEnum.Success;
+                        obj.code = HttpCodeEnum.OK;
                     }
                     else
                     {
@@ -103,7 +102,7 @@ namespace Learn.Dal.Busines.SystemManage
             TData obj = new TData();
             await userService.UpdateUser(entity);
 
-            obj.code = RequestTypeEnum.Success;
+            obj.code = HttpCodeEnum.OK;
             return obj;
         }
         #endregion
