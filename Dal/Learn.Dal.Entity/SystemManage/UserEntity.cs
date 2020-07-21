@@ -143,7 +143,7 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 
         /// </summary>
-        public System.Boolean? user_online { get; set; }
+        public bool user_online { get; set; }
 
         /// <summary>
         /// 
@@ -153,17 +153,22 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 
         /// </summary>
-        public System.Int32? single_flag { get; set; }
+        public int? single_flag { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.Boolean? is_enabled { get; set; }
+        public bool is_enabled { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.Boolean? check_online { get; set; }
+        public bool is_look { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool check_online { get; set; }
 
         /// <summary>
         /// 

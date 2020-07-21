@@ -10,7 +10,7 @@ var defaults_req = {
     wait: null,
     code: 0,
 };
-var Learn = {
+var learn = {
     req: function (options) {
         var defaults = defaults_req;
         defaults = $.extend(defaults, options);

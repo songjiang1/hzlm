@@ -77,8 +77,8 @@
             form.on('submit(LAY-user-login-submit)', function (obj) {
                 obj.field.password = $.md5(obj.field.password);
                 //请求登入接口
-                //Learn.req({
-                //    url: Learn.GetHost() + '/Home/Login',
+                //learn.req({
+                //    url: learn.GetHost() + '/Home/Login',
                 //    data: obj.field,
                 //    method: "post",
                 //    done: function (res) {

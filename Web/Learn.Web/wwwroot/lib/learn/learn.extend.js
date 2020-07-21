@@ -278,74 +278,7 @@ function VBARound(num, decimalPlaces) {
 }
 /*==============================扩展 结束==============================*/
 
-
-/*==============================判断 开始==============================*/
-//空判断
-function isEmpty(obj) {
-    if (typeof obj == "undefined" || obj == null || obj == "") {
-        return true;
-    } else {
-        return false;
-    }
-}
-/*==============================判断 结束==============================*/
-
-/*==============================数据分组 开始==============================*/
-//分组 
-//array 数据  分组函数
-//用例： var updateArry = groupBy(dirtyItems, function (arryitem) {  return [arryitem.Mark, arryitem.Source];   }); 
-function groupBy(array, f) {
-
-    const groups = {};
-    array.forEach(function (o) {
-        const group = JSON.stringify(f(o));
-        groups[group] = groups[group] || [];
-        groups[group].push(o);
-    });
-    return Object.keys(groups).map(function (group) {
-        return groups[group];
-    });
-}
-/*==============================数据分组 结束==============================*/
-
-
-/*==============================其他通用 开始==============================*/
-//生成guid
-function getGuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
-/*==============================其他通用 结束==============================*/
-
-
-/*==============================返回ID 的第一个对象的引用 开始==============================*/
-//返回ID 的第一个对象的引用
-function _getElementById(id) {
-    return document.getElementById(id);
-}
-/*==============================返回ID 的第一个对象的引用 开始==============================*/
-
- 
-/*==============================HTM编码 开始==============================*/
-//HTML转义
-function HTMLEncode(html) {
-    var temp = document.createElement("div");
-    (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
-    var output = temp.innerHTML;
-    temp = null;
-    return output;
-}
-//HTML反转义
-function HTMLDecode(text) {
-    var temp = document.createElement("div");
-    temp.innerHTML = text;
-    var output = temp.innerText || temp.textContent;
-    temp = null;
-    return output;
-}
-/*==============================HTM编码 开始==============================*/
+  
 
 /*==============================表单 开始==============================*/
 //表单 $.isEmptyObject(obj) ：jquery方法，判断实体是否为空
