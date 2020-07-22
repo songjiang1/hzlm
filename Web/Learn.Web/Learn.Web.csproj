@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util.Log\Learn.Util.Log.csproj" />
     <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util.Model\Learn.Util.Model.csproj" />
+    <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util\Learn.Util.csproj" />
     <ProjectReference Include="..\..\Dal\Learn.Dal.Busines\Learn.Dal.Busines.csproj" />
     <ProjectReference Include="..\..\Dal\Learn.Dal.Entity\Learn.Dal.Entity.csproj" />
     <ProjectReference Include="..\Learn.Web.Code\Learn.Web.Code.csproj" />

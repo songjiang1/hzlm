@@ -25,6 +25,10 @@ namespace Learn.Web.Controllers
         {
             return View();
         }
+        public IActionResult AdminDefault()
+        {
+            return View();
+        }
         public IActionResult Login()
         {
             return View();
