@@ -28,75 +28,83 @@ namespace Learn.Dal.Busines.SystemManage
         public async Task<TData<UserEntity>> CheckLogin(string userName, string password, int platform=1)
         {
             TData<UserEntity> obj = new TData<UserEntity>();
-            if (userName.IsEmpty())
-            { 
-                obj.code = HttpCodeEnum.Login_AccountEmpty;
-                return obj;
-            }
-            if (password.IsEmpty())
+            try
             {
-                obj.code = HttpCodeEnum.Login_AccountPasswordEmpty;
-                return obj;
-            }
-            UserEntity user = await userService.CheckLogin(userName);
-            if (user != null)
-            {
-                if (!user.is_look)
+                if (userName.IsEmpty())
                 {
-                    obj.code = HttpCodeEnum.Login_AccountLocking; 
+                    obj.code = HttpCodeEnum.Login_AccountEmpty;
+                    return obj;
                 }
-                else
+                if (password.IsEmpty())
                 {
-                    if (!user.is_enabled)
+                    obj.code = HttpCodeEnum.Login_AccountPasswordEmpty;
+                    return obj;
+                }
+                UserEntity user = await userService.CheckLogin(userName);
+                if (user != null)
+                {
+                    if (user.is_look)
                     {
-                        string dbPassword = Md5Helper.MD5(DESEncrypt.Encrypt(password.ToLower(), user.secret_key).ToLower(), 32).ToLower();
-                        if (user.user_password == dbPassword)
-                        {
-                            user.logon_count = user.logon_count.ParseToInt() + 1;
-                            user.user_online = true;
-                            user.last_visit = DateTime.Now;
-                            switch (platform)
-                            {
-                                case (int)PlatformEnum.Web:
-                                    if (GlobalContext.SystemConfig.LoginMultiple)
-                                    {
-                                        #region 多次登录用同一个token
-                                        if (string.IsNullOrEmpty(user.token))
-                                        {
-                                            user.token = Md5Helper.GetGuid();
-                                        }
-                                        #endregion
-                                    }
-                                    else
-                                    {
-                                        user.token = Md5Helper.GetGuid();
-                                    }
-                                    break;
-
-                                case (int)PlatformEnum.WebApi:
-                                    user.token = Md5Helper.GetGuid();
-                                    break;
-                            }
-                            obj.data = user;
-                            obj.code = HttpCodeEnum.OK;
-                        }
-                        else
-                        {
-                            obj.code = HttpCodeEnum.Login_AccountPasswordError;
-                        }
+                        obj.code = HttpCodeEnum.Login_AccountLocking;
                     }
                     else
                     {
-                        obj.code = HttpCodeEnum.Login_AccountDisable;
+                        if (!user.is_enabled)
+                        {
+                            string dbPassword = Md5Helper.MD5(DESEncrypt.Encrypt(password.ToLower(), user.secret_key).ToLower(), 32).ToLower();
+                            if (user.user_password == dbPassword)
+                            {
+                                user.logon_count = user.logon_count.ParseToInt() + 1;
+                                user.user_online = true;
+                                user.last_visit = DateTime.Now;
+                                switch (platform)
+                                {
+                                    case (int)PlatformEnum.Web:
+                                        if (GlobalContext.SystemConfig.LoginMultiple)
+                                        {
+                                            #region 多次登录用同一个token
+                                            if (string.IsNullOrEmpty(user.token))
+                                            {
+                                                user.token = Md5Helper.GetGuid();
+                                            }
+                                            #endregion
+                                        }
+                                        else
+                                        {
+                                            user.token = Md5Helper.GetGuid();
+                                        }
+                                        break;
+
+                                    case (int)PlatformEnum.WebApi:
+                                        user.token = Md5Helper.GetGuid();
+                                        break;
+                                }
+                                obj.data = user;
+                                obj.code = HttpCodeEnum.OK;
+                            }
+                            else
+                            {
+                                obj.code = HttpCodeEnum.Login_AccountPasswordError;
+                            }
+                        }
+                        else
+                        {
+                            obj.code = HttpCodeEnum.Login_AccountDisable;
+                        }
                     }
+
                 }
-               
+                else
+                {
+                    obj.code = HttpCodeEnum.Login_AccountNotExist;
+                }
+                return obj;
             }
-            else
-            {
-                obj.code = HttpCodeEnum.Login_AccountNotExist;
+            catch (Exception ex)
+            { 
+                return obj;
             }
-            return obj;
+           
         }
         #endregion
 

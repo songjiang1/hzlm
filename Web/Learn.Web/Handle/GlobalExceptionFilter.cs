@@ -28,7 +28,7 @@ namespace Learn.Web.Controllers
                 {
                     obj.msg = "抱歉，系统错误，请联系管理员！";
                 }
-                context.Result = new CustomJsonResult { Value = obj };
+                context.Result = new  JsonResult(obj);
                 context.ExceptionHandled = true;
             }
             else

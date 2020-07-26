@@ -10,7 +10,7 @@ using Learn.Web.Code;
 using Learn.Util.Extension;
 
 namespace Learn.Web.Controllers
-{
+{ 
     public class HomeController : BaseController
     {
          //this.ControllerContext.RouteData.Values["Action"].ParseToString();

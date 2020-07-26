@@ -22,68 +22,68 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 
         /// </summary>
-        public System.String description { get; set; }
+        public string description { get; set; }
          
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String code { get; set; }
+        public string code { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String user_account { get; set; }
+        public string user_account { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String user_password { get; set; }
+        public string user_password { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String secret_key { get; set; }
+        public string secret_key { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String real_name { get; set; }
+        public string real_name { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String nick_name { get; set; }
+        public string nick_name { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String head_icon { get; set; }
+        public string head_icon { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String simple_spelling { get; set; }
+        public string simple_spelling { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String full_spelling { get; set; }
+        public string full_spelling { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.Int32? gender { get; set; }
+        public int? gender { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.DateTime? birthday { get; set; }
+        public DateTime? birthday { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String mobile { get; set; }
+        public string mobile { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -93,52 +93,52 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 
         /// </summary>
-        public System.String telephone { get; set; }
+        public string telephone { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String email { get; set; }
+        public string email { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String qq { get; set; }
+        public string qq { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String wechat { get; set; }
+        public string wechat { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String msn { get; set; }
+        public string msn { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String manager_id { get; set; }
+        public string manager_id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String organize_id { get; set; }
+        public string organize_id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String department_id { get; set; }
+        public string department_id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String role_id { get; set; }
+        public string role_id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.String duty_id { get; set; }
+        public string duty_id { get; set; }
 
         /// <summary>
         /// 
@@ -148,7 +148,7 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 
         /// </summary>
-        public System.String open_id { get; set; }
+        public string open_id { get; set; }
 
         /// <summary>
         /// 
@@ -173,37 +173,37 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 
         /// </summary>
-        public System.DateTime? allow_start_time { get; set; }
+        public DateTime? allow_start_time { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.DateTime? allow_end_time { get; set; }
+        public DateTime? allow_end_time { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.DateTime? lock_start_date { get; set; }
+        public DateTime? lock_start_date { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.DateTime? lock_end_date { get; set; }
+        public DateTime? lock_end_date { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.DateTime? first_visit { get; set; }
+        public DateTime? first_visit { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.DateTime? last_visit { get; set; }
+        public DateTime? last_visit { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public System.Int32? logon_count { get; set; }
+        public int? logon_count { get; set; }
 
         /// <summary>
         /// 
