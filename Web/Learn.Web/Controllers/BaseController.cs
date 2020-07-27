@@ -22,132 +22,132 @@ namespace Learn.Web.Controllers
     /// </summary>
     public class BaseController : Controller
     {
-        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
-        {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+        //public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        //{
+        //    Stopwatch sw = new Stopwatch();
+        //    sw.Start();
 
-            string action = context.RouteData.Values["Action"].ParseToString();
-            OperatorInfo user = await Operator.Instance.Current();
+        //    string action = context.RouteData.Values["Action"].ParseToString();
+        //    OperatorInfo user = await Operator.Instance.Current();
 
-            //if (GlobalContext.SystemConfig.Demo)
-            //{
-            //    if (context.HttpContext.Request.Method.ToUpper() == "POST")
-            //    {
-            //        if (action.ToUpper() != "Login".ToUpper() && action.ToUpper() != "CodePreviewJson".ToUpper())
-            //        {
-            //            TData obj = new TData();
-            //            obj.msg = "演示模式，不允许操作";
-            //            context.Result = new CustomJsonResult { Value = obj };
-            //            return;
-            //        }
-            //    }
-            //}
+        //    //if (GlobalContext.SystemConfig.Demo)
+        //    //{
+        //    //    if (context.HttpContext.Request.Method.ToUpper() == "POST")
+        //    //    {
+        //    //        if (action.ToUpper() != "Login".ToUpper() && action.ToUpper() != "CodePreviewJson".ToUpper())
+        //    //        {
+        //    //            TData obj = new TData();
+        //    //            obj.msg = "演示模式，不允许操作";
+        //    //            context.Result = new CustomJsonResult { Value = obj };
+        //    //            return;
+        //    //        }
+        //    //    }
+        //    //}
 
-            var resultContext = await next();
+        //    var resultContext = await next();
 
-            sw.Stop();
-            string ip = NetHelper.Ip;
-            LogEntity operateEntity = new LogEntity();
-            var areaName = context.RouteData.DataTokens["area"] + "/";
-            var controllerName = context.RouteData.Values["controller"] + "/";
-            string currentUrl = "/" + areaName + controllerName + action;
+        //    sw.Stop();
+        //    string ip = NetHelper.Ip;
+        //    LogEntity operateEntity = new LogEntity();
+        //    var areaName = context.RouteData.DataTokens["area"] + "/";
+        //    var controllerName = context.RouteData.Values["controller"] + "/";
+        //    string currentUrl = "/" + areaName + controllerName + action;
 
-            if (action.ParseToString().ToLower() != "GetServerJson".ToLower() && action.ParseToString().ToLower() != "Error".ToLower())
-            {
-                #region 获取请求参数
-                switch (context.HttpContext.Request.Method.ToUpper())
-                {
-                    case "GET":
-                        operateEntity.execute_param = context.HttpContext.Request.QueryString.Value.ParseToString();
-                        break;
+        //    if (action.ParseToString().ToLower() != "GetServerJson".ToLower() && action.ParseToString().ToLower() != "Error".ToLower())
+        //    {
+        //        #region 获取请求参数
+        //        switch (context.HttpContext.Request.Method.ToUpper())
+        //        {
+        //            case "GET":
+        //                operateEntity.execute_param = context.HttpContext.Request.QueryString.Value.ParseToString();
+        //                break;
 
-                    case "POST":
-                        Dictionary<string, string> param = new Dictionary<string, string>();
-                        foreach (var item in context.ActionDescriptor.Parameters)
-                        {
-                            var itemType = item.ParameterType;
-                            if (itemType.IsClass && itemType.Name != "String")
-                            {
-                                PropertyInfo[] infos = itemType.GetProperties();
-                                foreach (PropertyInfo info in infos)
-                                {
-                                    if (info.CanRead)
-                                    {
-                                        var propertyValue = context.HttpContext.Request.Form[info.Name];
-                                        if (!param.ContainsKey(info.Name))
-                                        {
-                                            if (!string.IsNullOrEmpty(propertyValue))
-                                            {
-                                                param.Add(info.Name, propertyValue);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if (param.Count > 0)
-                        {
-                            operateEntity.execute_url += context.HttpContext.Request.QueryString.Value.ParseToString();
-                            operateEntity.execute_param = TextHelper.GetSubString(JsonConvert.SerializeObject(param), 8000);
-                        }
-                        else
-                        {
-                            operateEntity.execute_param = context.HttpContext.Request.QueryString.Value.ParseToString();
-                        }
-                        break;
-                }
-                #endregion
+        //            case "POST":
+        //                Dictionary<string, string> param = new Dictionary<string, string>();
+        //                foreach (var item in context.ActionDescriptor.Parameters)
+        //                {
+        //                    var itemType = item.ParameterType;
+        //                    if (itemType.IsClass && itemType.Name != "String")
+        //                    {
+        //                        PropertyInfo[] infos = itemType.GetProperties();
+        //                        foreach (PropertyInfo info in infos)
+        //                        {
+        //                            if (info.CanRead)
+        //                            {
+        //                                var propertyValue = context.HttpContext.Request.Form[info.Name];
+        //                                if (!param.ContainsKey(info.Name))
+        //                                {
+        //                                    if (!string.IsNullOrEmpty(propertyValue))
+        //                                    {
+        //                                        param.Add(info.Name, propertyValue);
+        //                                    }
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                }
+        //                if (param.Count > 0)
+        //                {
+        //                    operateEntity.execute_url += context.HttpContext.Request.QueryString.Value.ParseToString();
+        //                    operateEntity.execute_param = TextHelper.GetSubString(JsonConvert.SerializeObject(param), 8000);
+        //                }
+        //                else
+        //                {
+        //                    operateEntity.execute_param = context.HttpContext.Request.QueryString.Value.ParseToString();
+        //                }
+        //                break;
+        //        }
+        //        #endregion
 
-                #region 异常获取
-                StringBuilder sbException = new StringBuilder();
-                if (resultContext.Exception != null)
-                {
-                    Exception exception = resultContext.Exception;
-                    sbException.AppendLine(exception.Message);
-                    while (exception.InnerException != null)
-                    {
-                        sbException.AppendLine(exception.InnerException.Message);
-                        exception = exception.InnerException;
-                    }
-                    sbException.AppendLine(resultContext.Exception.StackTrace);
-                    //operateEntity.LogStatus = OperateStatusEnum.Fail.ParseToInt();
-                }
-                else
-                {
-                    //operateEntity.LogStatus = OperateStatusEnum.Success.ParseToInt();
-                }
-                #endregion
+        //        #region 异常获取
+        //        StringBuilder sbException = new StringBuilder();
+        //        if (resultContext.Exception != null)
+        //        {
+        //            Exception exception = resultContext.Exception;
+        //            sbException.AppendLine(exception.Message);
+        //            while (exception.InnerException != null)
+        //            {
+        //                sbException.AppendLine(exception.InnerException.Message);
+        //                exception = exception.InnerException;
+        //            }
+        //            sbException.AppendLine(resultContext.Exception.StackTrace);
+        //            //operateEntity.LogStatus = OperateStatusEnum.Fail.ParseToInt();
+        //        }
+        //        else
+        //        {
+        //            //operateEntity.LogStatus = OperateStatusEnum.Success.ParseToInt();
+        //        }
+        //        #endregion
 
-                #region 日志实体                  
-                //if (user != null)
-                //{
-                //    operateEntity.BaseCreatorId = user.UserId;
-                //}
+        //        #region 日志实体                  
+        //        //if (user != null)
+        //        //{
+        //        //    operateEntity.BaseCreatorId = user.UserId;
+        //        //}
 
-                //operateEntity.ExecuteTime = sw.ElapsedMilliseconds.ParseToInt();
-                //operateEntity.IpAddress = ip;
-                //operateEntity.ExecuteUrl = currentUrl.Replace("//", "/");
-                //operateEntity.ExecuteResult = TextHelper.GetSubString(sbException.ToString(), 4000);
-                #endregion
+        //        //operateEntity.ExecuteTime = sw.ElapsedMilliseconds.ParseToInt();
+        //        //operateEntity.IpAddress = ip;
+        //        //operateEntity.ExecuteUrl = currentUrl.Replace("//", "/");
+        //        //operateEntity.ExecuteResult = TextHelper.GetSubString(sbException.ToString(), 4000);
+        //        #endregion
 
-                //Action taskAction = async () =>
-                //{
-                //    // 让底层不用获取HttpContext
-                //    operateEntity.BaseCreatorId = operateEntity.BaseCreatorId ?? 0;
+        //        //Action taskAction = async () =>
+        //        //{
+        //        //    // 让底层不用获取HttpContext
+        //        //    operateEntity.BaseCreatorId = operateEntity.BaseCreatorId ?? 0;
 
-                //    // 耗时的任务异步完成
-                //    //operateEntity.IpLocation = IpLocationHelper.GetIpLocation(ip);
-                //    //await new LogOperateBLL().SaveForm(operateEntity);
-                //};
-                //AsyncTaskHelper.StartTask(taskAction);
-            }
-        }
+        //        //    // 耗时的任务异步完成
+        //        //    //operateEntity.IpLocation = IpLocationHelper.GetIpLocation(ip);
+        //        //    //await new LogOperateBLL().SaveForm(operateEntity);
+        //        //};
+        //        //AsyncTaskHelper.StartTask(taskAction);
+        //    }
+        //}
 
-        public override void OnActionExecuted(ActionExecutedContext context)
-        {
-            base.OnActionExecuted(context);
-        }
+        //public override void OnActionExecuted(ActionExecutedContext context)
+        //{
+        //    base.OnActionExecuted(context);
+        //}
 
         
        

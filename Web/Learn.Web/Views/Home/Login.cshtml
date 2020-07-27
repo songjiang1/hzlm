@@ -91,9 +91,12 @@
                     type: 'POST',//类型
                     data: obj.field, 
 				    //请求成功
-				    success:function(data,status){
-                        alert(data);
-                        window.location.href = "/Home/AdminDesktop";
+                    success: function (data, status) { 
+                        if (data.code === 200) {
+                            window.location.href = "/Home/AdminDefault";
+                        } else {
+                            layer.msg(data.msg);
+                        }
 					//alert(status);
 				    },
 				//失败/超时
