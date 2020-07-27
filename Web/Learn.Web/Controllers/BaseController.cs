@@ -170,6 +170,18 @@ namespace Learn.Web.Controllers
         /// 返回成功消息
         /// </summary>
         /// <param name="message">消息</param>
+        /// <returns></returns>
+        protected virtual ActionResult Success(HttpCodeEnum code)
+        {
+            TData obj = new TData();
+            obj.code = code;
+            obj.msg = code.ParseToEnumDescribe();
+            return Json(obj);
+        }
+        /// <summary>
+        /// 返回成功消息
+        /// </summary>
+        /// <param name="message">消息</param>
         /// <param name="data">数据</param>
         /// <returns></returns>
         protected virtual ActionResult Success(string message, object data)

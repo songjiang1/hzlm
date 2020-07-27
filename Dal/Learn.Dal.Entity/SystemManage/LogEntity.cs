@@ -122,7 +122,7 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 执行结果信息
         /// </summary>
-        public string execute_resultJson { get ; set ; }
+        public string execute_result_json { get ; set ; }
 
         /// <summary>
         /// 地址

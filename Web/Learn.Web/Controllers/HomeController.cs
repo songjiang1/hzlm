@@ -59,13 +59,13 @@ namespace Learn.Web.Controllers
                 Action taskAction = async () =>
                 { 
                     logEntity.execute_result = HttpCodeEnum.Login_Success;
-                    logEntity.execute_resultJson = HttpCodeEnum.Login_Success.ParseToEnumDescribe();
+                    logEntity.execute_result_json = HttpCodeEnum.Login_Success.ParseToEnumDescribe();
 
                     // 让底层不用获取HttpContext  
                     await  logBLL.WriteLog(logEntity);
                 }; 
                 AsyncTaskHelper.StartTask(taskAction);  
-                return Success(userObj.msg);
+                return Success(userObj.code);
             }
             catch (Exception ex)
             {

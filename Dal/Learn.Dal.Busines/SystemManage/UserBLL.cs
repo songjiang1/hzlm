@@ -49,7 +49,7 @@ namespace Learn.Dal.Busines.SystemManage
                     }
                     else
                     {
-                        if (!user.is_enabled)
+                        if (user.is_enabled)
                         {
                             string dbPassword = Md5Helper.MD5(DESEncrypt.Encrypt(password.ToLower(), user.secret_key).ToLower(), 32).ToLower();
                             if (user.user_password == dbPassword)
