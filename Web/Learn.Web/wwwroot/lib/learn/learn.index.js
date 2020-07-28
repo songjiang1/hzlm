@@ -4,9 +4,28 @@ class LearnIndex {
      * method constructor
      */
     constructor() {
-        // 工作簿元素
-        this.user = workbook;
-         
+        //layer元素
+        this.$ = null;
+        this.upload = null;
+        this.form = null;
+        this.tree = null;
+        this.element = null;
+        this.laydate = null;
+        this.layer = null; 
     }
-   
+
+    defaultInit() {
+        layui.use(['form', 'tree', 'upload', 'element', 'laydate'], function () {
+            LearnIndex.$ = layui.jquery;
+            LearnIndex.upload = layui.upload;
+            LearnIndex.form = layui.form;
+            LearnIndex.tree = layui.tree;
+            LearnIndex.element = layui.element;
+            LearnIndex.laydate = layui.laydate;
+            LearnIndex.layer = layer; 
+        })
+    }
+    init() {
+        
+    }
 }
