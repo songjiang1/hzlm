@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\" />
+    <Folder Include="Areas\AuthorizeManage\" />
     <Folder Include="StaticFiles\" />
     <Folder Include="Upload\" />
   </ItemGroup>
