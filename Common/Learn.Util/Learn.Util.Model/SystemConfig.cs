@@ -2,6 +2,10 @@
 {
     public class SystemConfig
     {
+        public SystemConfig()
+        {
+            DBSlowSqlLogTime = 5;
+        }
         /// <summary>
         /// 是否是Demo模式
         /// </summary>
@@ -51,6 +55,17 @@
 
 
         public string CacheType { get; set; }
+
+
+
+        /// <summary>
+        /// 慢查询记录Sql(秒),保存到文件以便分析
+        /// </summary>
+        public int DBSlowSqlLogTime { get; set; }
+
+        public string CacheProvider { get; set; }
+        public string RedisConnectionString { get; set; }
+
 
     }
 }

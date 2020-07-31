@@ -337,7 +337,7 @@ namespace Learn.Bll.EF
 
         #region 对象实体 查询
         public async Task<T> FindEntity<T>(string keyValue) where T : class
-        {
+        { 
             return await dbcontext.Set<T>().FindAsync(keyValue);
         }
         public async Task<T> FindEntity<T>(Expression<Func<T, bool>> condition) where T : class, new()

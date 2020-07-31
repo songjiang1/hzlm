@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Debug;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,6 +13,11 @@ namespace Learn.Bll.EF
 {
     public class SqlServerDbContext : DbContext, IDisposable
     {
+        //public static readonly LoggerFactory SQLLoggerFactory = new LoggerFactory(new[] { new DebugLoggerProvider() });
+        //private static ILoggerFactory Mlogger => new LoggerFactory()
+        //        .AddDebug((categoryName, logLevel) => (logLevel == LogLevel.Information) && (categoryName == DbLoggerCategory.Database.Command.Name))
+        //       .AddConsole((categoryName, logLevel) => (logLevel == LogLevel.Information) && (categoryName == DbLoggerCategory.Database.Command.Name));
+        
         private string ConnectionString { get; set; }
 
         #region 构造函数
@@ -37,7 +44,11 @@ namespace Learn.Bll.EF
         #region 重载
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(ConnectionString);
+            var loggerFactory = new LoggerFactory();
+            loggerFactory.AddProvider(new EFLoggerProvider());
+            optionsBuilder.UseLoggerFactory(loggerFactory).UseSqlServer(ConnectionString);//注册UseLoggerFactory ，
+
+            //optionsBuilder.AddInterceptors(new CustomDbCommandInterceptor()).UseSqlServer(ConnectionString); //注册sql拦截，DbCommandInterceptor
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

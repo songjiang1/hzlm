@@ -1,6 +1,8 @@
-﻿using log4net;
+﻿using Learn.Util.Extension;
+using log4net;
 using log4net.Config;
 using log4net.Repository;
+using System;
 using System.IO;
 
 public class LogHelper
@@ -39,5 +41,33 @@ public class LogHelper
     public static void Error(string msg)
     {
         log.Error(msg);
+    }
+    public static void Error(Exception ex)
+    {
+        if (ex != null)
+        {
+            log.Error(GetExceptionMessage(ex));
+        }
+    }
+    private static string GetExceptionMessage(Exception ex)
+    {
+        string message = string.Empty;
+        if (ex != null)
+        {
+            message += ex.Message;
+            message += Environment.NewLine;
+            Exception originalException = ex.GetOriginalException();
+            if (originalException != null)
+            {
+                if (originalException.Message != ex.Message)
+                {
+                    message += originalException.Message;
+                    message += Environment.NewLine;
+                }
+            }
+            message += ex.StackTrace;
+            message += Environment.NewLine;
+        }
+        return message;
     }
 }
