@@ -90,17 +90,20 @@
                         </a>
                         <dl class="layui-nav-child">
                             <dd data-name="button">
-                                <a lay-href="/home/select">模板配置</a>
+                                <a lay-href="/SystemManage/Module/form">功能菜单添加</a>
                             </dd>
-                            <dd data-name="grid">
-                                <a href="javascript:;">数据交互</a>
-                                <dl class="layui-nav-child">
-                                    <dd data-name="list"><a lay-href="/home/update">table</a></dd>
-                                </dl>
+                            <dd data-name="button">
+                                <a lay-href="/SystemManage/Module/index">功能菜单</a>
                             </dd>
+                            @*<dd data-name="grid">
+            <a href="javascript:;">数据交互</a>
+            <dl class="layui-nav-child">
+                <dd data-name="list"><a lay-href="/home/update">table</a></dd>
+            </dl>
+        </dd>*@
                         </dl>
                     </li>
-                    <li data-name="component" class="layui-nav-item">
+                    @*<li data-name="component" class="layui-nav-item">
                         <a href="javascript:;" lay-tips="组件系统" lay-direction="2" title="组件系统">
                             <i class="layui-icon layui-icon-component"></i>
                             <cite>组件系统</cite>
@@ -113,7 +116,7 @@
                                 <a lay-href="/home/update1" title="水泥混凝土立方体抗压强度">水泥混凝土立方体抗压强度</a>
                             </dd>
                         </dl>
-                    </li>
+                    </li>*@
                 </ul>
             </div>
         </div>
@@ -155,7 +158,15 @@
 </div>
 
 <script src="@Url.Content("~/lib/learn/learn.index.js")"></script>
+<script>
+    $("#LAY-system-side-menu li a").click(function () {
+        let _herf = $(this).attr("lay-href");
+        if (_herf) {
+            $("#LAY_app_body iframe").attr("src",_herf);
+        }
+    })
 
+</script>
 <script>
     // aggregation实现class类多继承
     debugger;
@@ -170,6 +181,8 @@
         learn.laydate = layui.laydate;
         learn.layer = layui.layer;
         learn.init();
+
+
     })
     // 绑定所有工具api
 </script>

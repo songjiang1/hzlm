@@ -1,0 +1,245 @@
+﻿@inject Microsoft.AspNetCore.Hosting.IHostingEnvironment HostingEnvironment
+@using Learn.Util
+@{
+    ViewBag.Title = "系统功能";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@*@section header{
+        @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/lib/layui-extend/steps/step.css"))
+        @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/lib/layui-extend/steps/step.js"))
+    }*@
+<link rel="stylesheet" href='@Url.Content("~/lib/layui-extend/steps/step.css")' />
+@*<script src="@Url.Content("~/lib/layui-extend/steps/step.js")"></script>*@
+<script src="@Url.Content("~/lib/layui2.5.5/layui/lay/modules/carousel.js")"></script>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body" style="padding-top: 40px;">
+            <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
+                <div carousel-item>
+                    <div>
+                        <form class="layui-form" style="margin: 0 auto;max-width: 720px;padding-top: 40px;">
+
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">上一级</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" placeholder="上一级" value="" class="layui-input" lay-verify="number" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">编号</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="code" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">名称</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="name" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">目标</label>
+                                    <div class="layui-input-inline">
+                                        <select name="targets">
+                                            <option value="1" selected>目标</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">图标</label>
+                                    <div class="layui-input-inline">
+                                        <select name="icon">
+                                            <option value="1" selected>图标</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">地址</label>
+                                <div class="layui-input-block">
+                                    <input type="text" placeholder="地址" name="url_address" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item" pane="">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">选项</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" name="menu" lay-skin="primary" title="菜单" checked=""><div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary"><span>菜单</span><i class="layui-icon layui-icon-ok"></i></div>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">排序码</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" placeholder="排序码" name="sort_code" class="layui-input">
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">备注</label>
+                                <div class="layui-input-block">
+                                    <textarea placeholder="备注" rows="2" name="description" class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="formStep">
+                                        &emsp;下一步&emsp;
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">游戏ID:</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-form-mid layui-word-aux">639537</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">账户余额:</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-form-mid layui-word-aux">3000 元（保险箱：1000，现金：2000）</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">入款金额:</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-form-mid layui-word-aux">
+                                        <span style="font-size: 18px;color: #333;">1800 元</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">入款类型:</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-form-mid layui-word-aux">保险箱</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">入款方式:</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-form-mid layui-word-aux">人工入款</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">备注说明:</label>
+                                <div class="layui-input-block">
+                                    <div class="layui-form-mid layui-word-aux">备注说明</div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                    <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                        &emsp;确认入款&emsp;
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <div style="text-align: center;margin-top: 90px;">
+                            <i class="layui-icon layui-circle"
+                               style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
+                            <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
+                                入款成功
+                            </div>
+                            <div style="font-size: 14px;color: #666;margin-top: 20px;">预计两小时到账</div>
+                        </div>
+                        <div style="text-align: center;margin-top: 50px;">
+                            <button class="layui-btn next">再入一笔</button>
+                            <button class="layui-btn layui-btn-primary">查看账单</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="text-align: center;margin-top: 90px;">
+                            <i class="layui-icon layui-circle"
+                               style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
+                            <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
+                                入款成功
+                            </div>
+                            <div style="font-size: 14px;color: #666;margin-top: 20px;">预计两小时到账</div>
+                        </div>
+                        <div style="text-align: center;margin-top: 50px;">
+                            <button class="layui-btn next">再入一笔</button>
+                            <button class="layui-btn layui-btn-primary">查看账单</button>
+                        </div>
+                    </div>
+                      <div>
+                        <div style="text-align: center;margin-top: 90px;">
+                            <i class="layui-icon layui-circle"
+                               style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
+                            <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
+                                入款成功
+                            </div>
+                            <div style="font-size: 14px;color: #666;margin-top: 20px;">预计两小时到账</div>
+                        </div>
+                        <div style="text-align: center;margin-top: 50px;">
+                            <button class="layui-btn next">再入一笔</button>
+                            <button class="layui-btn layui-btn-primary">查看账单</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+<script>
+    layui.extend({
+        step: '/lib/layui-extend/steps/step'
+    }).use(['form', 'step'], function () {
+        var $ = layui.$
+            , form = layui.form
+            , step = layui.step;
+
+        step.render({
+            elem: '#stepForm',
+            filter: 'stepForm',
+            width: '100%', //设置容器宽度
+            stepWidth: '750px',
+            height: '500px',
+            stepItems: [{
+                title: '基础信息'
+            }, {
+                title: '按钮信息'
+            }, {
+                title: '列表视图'
+            }, {
+                title: '表单视图'
+            }, {
+                title: '数据接口'
+            }]
+        });
+
+
+        form.on('submit(formStep)', function (data) {
+            step.next('#stepForm');
+            return false;
+        });
+
+        form.on('submit(formStep2)', function (data) {
+            step.next('#stepForm');
+            return false;
+        });
+
+        $('.pre').click(function () {
+            step.pre('#stepForm');
+        });
+
+        $('.next').click(function () {
+            step.next('#stepForm');
+        });
+    })
+
+</script>
+
