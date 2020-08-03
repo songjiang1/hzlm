@@ -55,17 +55,18 @@ namespace Learn.Web.Controllers
                 {
                     await new UserBLL().UpdateUser(userObj.data);
                     await Operator.Instance.AddCurrent(userObj.data.token);
-                }
-                Action taskAction = async () =>
-                { 
-                    logEntity.execute_result = HttpCodeEnum.Login_Success;
-                    logEntity.execute_result_json = HttpCodeEnum.Login_Success.ParseToEnumDescribe();
+                    Action taskAction = async () =>
+                    {
+                        logEntity.execute_result = userObj.code;
+                        logEntity.execute_result_json = userObj.code.ParseToEnumDescribe();
 
-                    // 让底层不用获取HttpContext  
-                    await  logBLL.WriteLog(logEntity);
-                }; 
-                AsyncTaskHelper.StartTask(taskAction);  
-                return Success(userObj.code);
+                        // 让底层不用获取HttpContext  
+                        await logBLL.WriteLog(logEntity);
+                    };
+                    AsyncTaskHelper.StartTask(taskAction);
+                    return Success(userObj.code);
+                } 
+                return Error(userObj.code);
             }
             catch (Exception ex)
             {

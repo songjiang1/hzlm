@@ -8,7 +8,7 @@ namespace Learn.Dal.Entity.SystemManage
     /// <summary>
     /// 
     /// </summary>
-    public class ModuleInstance : BaseEntity
+    public class ModuleInstanceEntity : BaseEntity
     {
        
          
@@ -22,9 +22,8 @@ namespace Learn.Dal.Entity.SystemManage
         /// 
         /// </summary>
         public string description { get; set; }
-
-        
-
+         
+        [ForeignKey("sys_module")]
         /// <summary>
         /// 
         /// </summary>
@@ -49,5 +48,7 @@ namespace Learn.Dal.Entity.SystemManage
         /// 
         /// </summary>
         public int is_enabled { get; set; }
+
+        public virtual ModuleEntity moduleEntity { get; set; }
     }
 }

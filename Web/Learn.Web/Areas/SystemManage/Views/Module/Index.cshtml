@@ -1,135 +1,210 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "系统功能";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<div class="layui-fluid">
+    <div class="layui-card">
+        @*<div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    筛选
+                </div>
+                <div class="layui-inline">
+                    <select name="rolename" lay-filter="LAY-user-adminrole-type">
+                        <option value="-1">全部角色</option>
+                        <option value="0">管理员</option>
+                    </select>
+                </div>
+            </div>
+        </div>*@
+        <div class="layui-card-body">
+            <div id="toolbar" style="padding-bottom: 10px;"> 
+                <a class="layui-btn layui-btn-sm"  lay-event="add"><i class="layui-icon layui-icon-add-1"></i>添加</a>
+                <a class="layui-btn layui-btn-sm layui-btn-normal"  lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                <a class="layui-btn layui-btn-sm layui-btn-danger"  lay-event="delete"><i class="layui-icon layui-icon-delete"></i>删除</a>
+            </div>
 
-<table class="layui-hide" id="tableId" lay-filter="tableEvent"></table>
-
-<script src="@Url.Content("~/lib/layui-extend/tableTree/tableEdit.js")"></script>
-<script src="@Url.Content("~/lib/layui-extend/tableTree/tableTree.js")"></script> 
-<script>
-    var table = layui.table
-        , $ = layui.$
-        , tableTree = layui.tableTree;
-    var params = [
-        { name: 1, value: "张三1" }
-        , { name: 2, value: "张三2" }
-        , { name: 3, value: "张三3" }
-        , { name: 4, value: "张三4" }
-        , { name: 5, value: "张三5" }
-    ];
-    function templet(d, field) {
-        if (!d[field]) return '';
-        if (typeof d[field] === 'string') return d[field];
-        if (!Array.isArray(d[field])) return d[field].value ? d[field].value : '';
-        var str = [];
-        d[field].forEach(function (e) { str.push(e.value) });
-        return str.join(' || ');
-    }
-    var treeTable = tableTree.render({
-        elem: '#tableId'
-        , id: 'tableTree'
-        , url: 'json/data.json'
-        , height: 'full-90'
-        , page: true
-        , treeConfig: { //表格树所需配置
-            showField: 'name' //表格树显示的字段
-            , treeid: 'id' //treeid所对应字段的值在表格数据中必须是唯一的，且不能为空。
-            , treepid: 'pid'//父级id字段名称
-            , iconClass: 'layui-icon-triangle-r' //小图标class样式 窗口图标 layui-icon-layer
-        }
-        , cols: [[
-            { type: 'checkbox' }
-            , { field: 'name', title: 'name', width: 259 }
-            , { field: 'id', title: 'id', width: 120, sort: true }
-            , {
-                field: 'danxuan', align: 'center', event: 'danxuan'
-                , config: { type: 'select', data: params }
-                , title: '单选', width: 120, templet: templet
+            <table class="layui-table layui-form" id="tree-table" lay-size="sm"></table> 
+            
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    layui.extend({
+        treeTable: '/lib/layui-extend/tableTree/treeTable'
+    }).use(['treeTable', 'layer', 'code', 'form'], function () {
+        var o = layui.$,
+            form = layui.form,
+            layer = layui.layer,
+            treeTable = layui.treeTable;
+        var re = treeTable.render({
+            elem: '#tree-table',
+            url:"/SystemManage/Module/GetListJson",
+            icon_key: 'title',
+            is_checkbox: true,
+            end: function (e) {
+                form.render();
             }
-            , {
-                field: 'duoxuan', title: '多选', event: 'duoxuan'
-                , config: { type: 'select', data: params, enabled: true }
-                , width: 120, templet: templet
+           ,limit: 30
+           ,toolbar: '#toolbar',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '帮助'
+                , layEvent: 'LAYTABLE_TIPS'
+                , icon: 'layui-icon-tips'
+            }],
+            cols: [
+                {
+                    key: 'title',
+                    title: '名称',
+                    width: '100px',
+                    template: function (item) {
+                        if (item.level == 0) {
+                            return '<span style="color:red;">' + item.title + '</span>';
+                        } else if (item.level == 1) {
+                            return '<span style="color:green;">' + item.title + '</span>';
+                        } else if (item.level == 2) {
+                            return '<span style="color:#aaa;">' + item.title + '</span>';
+                        }
+                    }
+                },
+                {
+                    key: 'id',
+                    title: 'ID',
+                    width: '100px',
+                    align: 'center',
+                },
+                {
+                    key: 'pid',
+                    title: '父ID',
+                    width: '100px',
+                    align: 'center',
+                },
+                {
+                    title: '开关',
+                    width: '100px',
+                    align: 'center',
+                    template: function (item) {
+                        return '<input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">';
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    template: function (item) {
+                        return '<a lay-filter="add">添加</a> | <a target="_blank" href="/detail?id=' + item.id + '">编辑</a>';
+                    }
+                }
+            ]
+        });
+        treeTable.render({
+            elem: '#tree-table1',
+            url:"/SystemManage/Module/GetListJson",
+            icon_key: 'title',
+            is_checkbox: true,
+            cols: [
+                {
+                    key: 'title',
+                    title: '名称',
+                    width: '100px',
+                    template: function (item) {
+                        if (item.level == 0) {
+                            return '<span style="color:red;">' + item.title + '</span>';
+                        } else if (item.level == 1) {
+                            return '<span style="color:green;">' + item.title + '</span>';
+                        } else if (item.level == 2) {
+                            return '<span style="color:#aaa;">' + item.title + '</span>';
+                        }
+                    }
+                },
+                {
+                    key: 'id',
+                    title: 'ID',
+                    width: '100px',
+                    align: 'center',
+                },
+                {
+                    key: 'pid',
+                    title: '父ID',
+                    width: '100px',
+                    align: 'center',
+                },
+            ]
+        });
+        treeTable.render({
+            elem: '#tree',
+            url:"/SystemManage/Module/GetListJson",
+            icon_key: 'title',
+            is_checkbox: true,
+            icon: {
+                open: 'layui-icon layui-icon-rate',
+                close: 'layui-icon layui-icon-rate-solid',
+                left: 16,
+            },
+            cols: [
+                {
+                    key: 'title',
+                    title: '名称',
+                },
+            ]
+        });
+        treeTable.render({
+            elem: '#tree1',
+            url: './data/table-tree.json',
+            icon_key: 'title',
+            cols: [
+                {
+                    key: 'title',
+                    title: '名称',
+                },
+            ]
+        });
+        // 监听展开关闭
+        treeTable.on('tree(flex)', function (data) {
+            layer.msg(JSON.stringify(data));
+        })
+        // 监听checkbox选择
+        treeTable.on('tree(box)', function (data) {
+            if (o(data.elem).parents('#tree-table1').length) {
+                var text = [];
+                o(data.elem).parents('#tree-table1').find('.cbx.layui-form-checked').each(function () {
+                    o(this).parents('[data-pid]').length && text.push(o(this).parents('td').next().find('span').text());
+                })
+                o(data.elem).parents('#tree-table1').prev().find('input').val(text.join(','));
             }
-            , {
-                field: 'birthday', title: '生日', width: 120, event: 'duoxuan'
-                , config: { type: 'date', dateType: 'date' }, templet: templet
-            }
-            , {
-                field: 'aihao', title: '爱好', width: 120, event: 'aihao'
-                , config: { type: 'input' }, templet: templet
-            }
-        ]]
-    });
-
-    /**
-    /**表格的增删改都会回调此方法
-     * 与table.on(tool(lay-filter))用法一致。
-     **/
-    treeTable.on('tool(tableEvent)', function (obj) {
-        var field = obj.field; //单元格字段
-        var value = obj.value; //修改后的值
-        var data = obj.data; //当前行数据
-        var event = obj.event; //当前单元格事件属性值
-        //event为del为删除 add则新增 edit则修改。这个三个值固定死了，切莫定义与之三个重复的event。
-        if (event !== 'del' && event !== 'add') {
-            var update = {};
-            update[field] = value;
-            obj.update(update);
-            console.log(obj)
-        }
-
-        if (event === 'del') {
-            obj.del();
-        }
-        if (event === 'add') {
-            //可ajax异步请求后台,后台返回数据后用 obj.add(,rs) 进行回调生成表格树。
-            setTimeout(function () {
-                var rs = [
-                    { "id": 11, "name": "张三11", "treeList": [{ "id": 14, "name": "张三14", "treeList": [{ "id": 15, "name": "张三15", "danxuan": null, "duoxuan": [{ "name": 1, "value": "张三1" }, { "name": 2, "value": "张三2" }], "birthday": "" }], "danxuan": null, "duoxuan": [{ "name": 1, "value": "张三1" }, { "name": 2, "value": "张三2" }], "birthday": "" }], "danxuan": null, "duoxuan": [{ "name": 1, "value": "张三1" }, { "name": 2, "value": "张三2" }], "birthday": "" },
-                    { "id": 12, "name": "张三12", "danxuan": null, "duoxuan": [{ "name": 1, "value": "张三1" }, { "name": 2, "value": "张三2" }], "birthday": "" },
-                    { "id": 13, "name": "张三13", "danxuan": null, "duoxuan": [{ "name": 1, "value": "张三1" }, { "name": 2, "value": "张三2" }], "birthday": "" }
-                ];
-                //在此模拟ajax异步的请求，返回数据调用以下函数。
-                //该方法新增下级节点，可以直接新表格树。
-                obj.add(rs);
-            }, 500);
-        }
-    });
-
-    /**
-     * 表格树排序，与layui进行了整合。
-     */
-    table.on('sort(tableEvent)', function (obj) {
-        treeTable.sort({ field: obj.field, desc: obj.type === 'desc' })
-    });
-
-    $('button').click(function () {
-        var id = $(this).attr("id");
-        if (id === "btn1") {
-            //data可以为空，为空则创建空行，否则按照data数据生成行
-            var data = { "id": 13, "pid": 333, "name": "张三13", "danxuan": null, "duoxuan": [{ "name": 1, "value": "张三1" }, { "name": 2, "value": "张三2" }], "birthday": "" };
-            treeTable.addTopRow(data);//该方法生成的行是最上级的行
-        } else if (id === 'btn2') {
-            console.log(treeTable.getCheckedData()); //获取选中行数据
-        } else if (id === 'btn3') {
-            console.log(treeTable.getTableTreeData()); //获取表格树所有数据
-        } else if (id === 'btn4') {
-            treeTable.closeCheckedRows(); // 关闭选中行树节点
-        } else if (id === 'btn5') {
-            treeTable.openCheckedRows(); // 展开选中行树节点
-        } else if (id === 'btn6') {
-            treeTable.closeAllRows();  //关闭所有树节点
-        } else if (id === 'btn7') {
-            treeTable.openAllRows(); //展开所有树节点
-        } else if (id === 'btn8') {
-            console.log(treeTable.getTreeOptions()); //获取表格配置
-        } else if (id === 'btn9') {
-            treeTable.reload(); //表格树进行reload
-        } else {
-            treeTable.delCheckedRows(); //删除选中行
-        }
-    });
+            layer.msg(JSON.stringify(data));
+        })
+        // 监听自定义
+        treeTable.on('tree(add)', function (data) {
+            layer.msg(JSON.stringify(data));
+        })
+        // 获取选中值，返回值是一个数组（定义的primary_key参数集合）
+        o('.get-checked').click(function () {
+            layer.msg('选中参数' + treeTable.checked(re).join(','))
+        })
+        // 刷新重载树表（一般在异步处理数据后刷新显示）
+        o('.refresh').click(function () {
+            re.data.push({ "id": 50, "pid": 0, "title": "1-4" }, { "id": 51, "pid": 50, "title": "1-4-1" });
+            treeTable.render(re);
+        })
+        // 全部展开
+        o('.open-all').click(function () {
+            treeTable.openAll(re);
+        })
+        // 全部关闭
+        o('.close-all').click(function () {
+            treeTable.closeAll(re);
+        })
+        o('#tree1').on('click', '[data-down]', function () {
+            o(this).find('span').length && o(this).parents('.layui-unselect').find('input').val(o(this).text());
+        })
+        o('.layui-select-title').click(function () {
+            o(this).parent().hasClass('layui-form-selected') ? o(this).next().hide() : o(this).next().show(), o(this).parent().toggleClass('layui-form-selected');
+        })
+        o(document).on("click", function (i) {
+            !o(i.target).parent().hasClass('layui-select-title') && !o(i.target).parents('table').length && !(!o(i.target).parents('table').length && o(i.target).hasClass('layui-icon')) && o(".layui-form-select").removeClass("layui-form-selected").find('.layui-anim').hide();
+        })
+    })
 </script>
+
 

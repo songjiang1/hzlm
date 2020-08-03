@@ -101,8 +101,8 @@ namespace Learn.Dal.Busines.SystemManage
                 return obj;
             }
             catch (Exception ex)
-            { 
-                return obj;
+            {
+                throw;
             }
            
         }

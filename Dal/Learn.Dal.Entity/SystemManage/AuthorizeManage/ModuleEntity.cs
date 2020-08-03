@@ -1,5 +1,6 @@
 ﻿ 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Learn.Dal.Entity.SystemManage
@@ -53,9 +54,14 @@ namespace Learn.Dal.Entity.SystemManage
         /// <summary>
         /// 备注
         /// </summary>
-        public string description { set; get; } 
+        public string description { set; get; }
+         
+        public ICollection<ModuleButtonEntity> moduleButtons { set; get; } 
+        public ICollection<ModuleColumnEntity> moduleColumns { set; get; } 
+        public ICollection<ModuleFormEntity> moduleForms { set; get; } 
+        public ICollection<ModuleInstanceEntity> moduleInstances { set; get; } 
         #endregion
 
-         
+
     }
 }

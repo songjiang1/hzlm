@@ -15,6 +15,7 @@ namespace Learn.Dal.Entity.SystemManage
     public class ModuleColumnEntity : BaseEntity
     {
         #region 实体成员 
+        [ForeignKey("sys_module")]
         /// <summary>
         /// 功能主键
         /// </summary>		
@@ -39,8 +40,10 @@ namespace Learn.Dal.Entity.SystemManage
         /// 备注
         /// </summary>		
         public string description { get; set; }
+
+        public virtual ModuleEntity moduleEntity { get; set; }
         #endregion
 
-         
+
     }
 }

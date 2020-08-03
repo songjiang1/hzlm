@@ -1,5 +1,6 @@
 ﻿ 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Learn.Dal.Entity.SystemManage
@@ -15,6 +16,8 @@ namespace Learn.Dal.Entity.SystemManage
     public class ModuleFormEntity:BaseEntity
     {
         #region 实体成员 
+
+        [ForeignKey("sys_module")]
         /// <summary>
         /// 功能主键
         /// </summary>
@@ -38,10 +41,10 @@ namespace Learn.Dal.Entity.SystemManage
         /// <summary>
         /// 备注
         /// </summary>
-        public string description { set; get; }
-        
+        public string description { set; get; } 
+        public virtual ModuleEntity moduleEntity { get; set; }
         #endregion
 
-         
+
     }
 }
