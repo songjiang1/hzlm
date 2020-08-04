@@ -11,12 +11,10 @@ namespace Learn.Dal.Entity.SystemManage
     /// 日 期：2015.08.01 14:00
     /// 描 述：系统按钮
     /// </summary>
-    ///  
-    [Table("sys_module_button")]
+    ///   
     public class ModuleButtonEntity : BaseEntity
     {
-        #region 实体成员 
-        [ForeignKey("sys_module")]
+        #region 实体成员  
         /// <summary>
         /// 功能主键
         /// </summary>		

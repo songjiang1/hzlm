@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -52,29 +53,51 @@ namespace Learn.Bll.EF
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Assembly entityAssembly = Assembly.Load(new AssemblyName("Learn.Dal.Entity"));
-            IEnumerable<Type> typesToRegister = entityAssembly.GetTypes().Where(p => !string.IsNullOrEmpty(p.Namespace))
-                                                                         .Where(p => !string.IsNullOrEmpty(p.GetCustomAttribute<TableAttribute>()?.Name));
-            foreach (Type type in typesToRegister)
-            {
-                dynamic configurationInstance = Activator.CreateInstance(type);
-                modelBuilder.Model.AddEntityType(type);
-            }
-            foreach (var entity in modelBuilder.Model.GetEntityTypes())
-            {
-                PrimaryKeyConvention.SetPrimaryKey(modelBuilder, entity.Name);
-                //var currentTableName = modelBuilder.Entity(entity.Name).Metadata.Relational().TableName;  
-                var currentTableName = modelBuilder.Entity(entity.Name).Metadata.GetTableName();
-                modelBuilder.Entity(entity.Name).ToTable(currentTableName.ToLower());
+            //Assembly entityAssembly = Assembly.Load(new AssemblyName("Learn.Dal.Entity"));
+            //IEnumerable<Type> typesToRegister = entityAssembly.GetTypes().Where(p => !string.IsNullOrEmpty(p.Namespace))
+            //                                                             .Where(p => !string.IsNullOrEmpty(p.GetCustomAttribute<TableAttribute>()?.Name));
+            //foreach (Type type in typesToRegister)
+            //{
+            //    dynamic configurationInstance = Activator.CreateInstance(type);
+            //    modelBuilder.Model.AddEntityType(type);
+            //}
+            //foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            //{
+            //    PrimaryKeyConvention.SetPrimaryKey(modelBuilder, entity.Name);
+            //    //var currentTableName = modelBuilder.Entity(entity.Name).Metadata.Relational().TableName;  
+            //    var currentTableName = modelBuilder.Entity(entity.Name).Metadata.GetTableName();
+            //    modelBuilder.Entity(entity.Name).ToTable(currentTableName.ToLower());
 
-                var properties = entity.GetProperties();
-                foreach (var property in properties)
-                {
-                    ColumnConvention.SetColumnName(modelBuilder, entity.Name, property.Name);
-                }
-            }
+            //    var properties = entity.GetProperties();
+            //    foreach (var property in properties)
+            //    {
+            //        ColumnConvention.SetColumnName(modelBuilder, entity.Name, property.Name);
+            //    }
+            //} 
+            //base.OnModelCreating(modelBuilder);
 
+            string executingAssemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            string mappingAssemblePath = Path.Combine(executingAssemblyDirectory, "Learn.Dal.Mapping.dll");
+
+            if (!File.Exists(mappingAssemblePath))
+                throw new Exception($"{mappingAssemblePath}文件不存在");
+
+            Assembly asm = Assembly.LoadFile(mappingAssemblePath);
+
+            var typesToRegister = asm.GetTypes()
+            .Where(type => !String.IsNullOrEmpty(type.Namespace))
+            .Where(type => type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
+            foreach (var type in typesToRegister)
+            {
+                object configurationInstance = Activator.CreateInstance(type);
+
+                modelBuilder.AddConfiguration(type, configurationInstance);
+            }
+            //modelBuilder.AddConfiguration(new UserMap());
             base.OnModelCreating(modelBuilder);
+
+
         }
         #endregion
     }

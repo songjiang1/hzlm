@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 namespace Learn.Dal.Entity.BaseManage
 {
-    [Table("sys_user_relation")]
+
     /// <summary>
     /// 
     /// </summary>

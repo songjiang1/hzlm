@@ -4,5 +4,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util.Enum\Learn.Util.Enum.csproj" />
+    <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util.Extension\Learn.Util.Extension.csproj" />
+    <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util\Learn.Util.csproj" />
+    <ProjectReference Include="..\..\Dal\Learn.Dal.Mapping\Learn.Dal.Mapping.csproj" />
+    <ProjectReference Include="..\..\Dal\Learn.Dal.Model\Learn.Dal.Model.csproj" />
+  </ItemGroup>
+
 
 </Project>

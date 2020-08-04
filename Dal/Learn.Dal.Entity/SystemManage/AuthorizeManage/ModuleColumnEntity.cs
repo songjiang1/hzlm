@@ -10,12 +10,10 @@ namespace Learn.Dal.Entity.SystemManage
     /// 创建人：宋江
     /// 日 期：2015.10.29 15:13
     /// 描 述：系统视图
-    /// </summary>
-    [Table("sys_module_column")]
+    /// </summary> 
     public class ModuleColumnEntity : BaseEntity
     {
-        #region 实体成员 
-        [ForeignKey("sys_module")]
+        #region 实体成员  
         /// <summary>
         /// 功能主键
         /// </summary>		

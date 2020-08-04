@@ -9,8 +9,7 @@ namespace Learn.Dal.Entity.BaseManage
     /// <summary>
     /// 
     /// </summary>
-    /// 
-    [Table("sys_log")]
+    ///  
     public class LogEntity: BaseEntity
     {
         //通过Attribute配置约束
