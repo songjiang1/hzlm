@@ -12,8 +12,7 @@ namespace Learn.Dal.Entity.SystemManage
     /// 日 期：2015.10.27 09:16
     /// 描 述：系统功能
     /// </summary>
-    /// 
-    [Table("sys_module")]
+    ///  
     public class ModuleEntity : BaseEntity
     {
         #region 实体成员 

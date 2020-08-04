@@ -21,9 +21,7 @@ namespace Learn.Dal.Entity.SystemManage
         /// <summary>
         /// 
         /// </summary>
-        public string description { get; set; }
-         
-        [ForeignKey("sys_module")]
+        public string description { get; set; } 
         /// <summary>
         /// 
         /// </summary>

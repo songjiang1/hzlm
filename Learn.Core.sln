@@ -55,7 +55,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learn.Dal.Model", "Dal\Lear
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learn.Web.Code", "Web\Learn.Web.Code\Learn.Web.Code.csproj", "{43278EAB-E970-4E6F-8E69-6386DBAEA451}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Learn.WebApi", "WebApi\Learn.WebApi\Learn.WebApi.csproj", "{1E672672-60E2-4515-9862-AB6FB7F4DD8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learn.WebApi", "WebApi\Learn.WebApi\Learn.WebApi.csproj", "{1E672672-60E2-4515-9862-AB6FB7F4DD8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Learn.Dal.Mapping", "Dal\Learn.Dal.Mapping\Learn.Dal.Mapping.csproj", "{604F595D-365B-42EF-9526-9EA7AA76508B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,6 +145,10 @@ Global
 		{1E672672-60E2-4515-9862-AB6FB7F4DD8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E672672-60E2-4515-9862-AB6FB7F4DD8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E672672-60E2-4515-9862-AB6FB7F4DD8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{604F595D-365B-42EF-9526-9EA7AA76508B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{604F595D-365B-42EF-9526-9EA7AA76508B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{604F595D-365B-42EF-9526-9EA7AA76508B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{604F595D-365B-42EF-9526-9EA7AA76508B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -170,6 +176,7 @@ Global
 		{E3D566D2-C91B-4A6F-A6CC-878921EA69B2} = {D5214D0F-DE29-4003-9927-B5E2E6E5B03F}
 		{43278EAB-E970-4E6F-8E69-6386DBAEA451} = {784A9549-6960-4878-BE38-507594997584}
 		{1E672672-60E2-4515-9862-AB6FB7F4DD8F} = {784A9549-6960-4878-BE38-507594997584}
+		{604F595D-365B-42EF-9526-9EA7AA76508B} = {D5214D0F-DE29-4003-9927-B5E2E6E5B03F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {80DD607A-2DCA-42CF-BFA9-F62BB0E576E2}

@@ -11,13 +11,11 @@ namespace Learn.Dal.Entity.SystemManage
     /// 创建人：宋江
     /// 日 期：2016.04.14 09:16
     /// 描 述：系统表单
-    /// </summary>
-    [Table("sys_module_form")]
+    /// </summary> 
     public class ModuleFormEntity:BaseEntity
     {
         #region 实体成员 
-
-        [ForeignKey("sys_module")]
+         
         /// <summary>
         /// 功能主键
         /// </summary>

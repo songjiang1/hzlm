@@ -10,13 +10,11 @@ namespace Learn.Dal.Entity.SystemManage
     /// 创建人：宋江
     /// 日 期：2016.04.26 09:16
     /// 描 述：系统表单实例
-    /// </summary>
-    [Table("sys_module_forminstance")]
+    /// </summary> 
     public class ModuleFormInstanceEntity : BaseEntity
     {
         #region 实体成员 
-
-        [ForeignKey("sys_module_form")]
+         
         /// <summary>
         /// 功能表单主键
         /// </summary>
