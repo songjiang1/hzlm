@@ -57,3 +57,15 @@
     padding: 6px 10px;
     resize: vertical;
 }
+.layui-table-body .layui-none {
+    line-height: 26px;
+    padding: 10px;
+    text-align: center;
+    color: #999
+}
+.layui-table .layui-none {
+    line-height: 26px;
+    padding: 10px;
+    text-align: center;
+    color: #999
+}

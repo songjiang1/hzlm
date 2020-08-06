@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Learn.Dal.Entity.SystemManage;
 using System.Linq.Expressions;
+using Learn.Dal.Model;
 
 namespace Learn.Dal.Busines.SystemManage
 {
@@ -32,9 +33,10 @@ namespace Learn.Dal.Busines.SystemManage
             TData<List<ModuleEntity>> obj = new TData<List<ModuleEntity>>();
             var list= await moduleService.GetBaseList();
             obj.data = list;
-            obj.code = HttpCodeEnum.OK;
+            obj.code = HttpCodeEnum.OK; 
             return obj;
         }
+        
         public async Task<TData<List<ModuleEntity>>> GetPageList(string where, Pagination pagination)
         {
             Expression<Func<ModuleEntity, bool>> expression = x=>true;

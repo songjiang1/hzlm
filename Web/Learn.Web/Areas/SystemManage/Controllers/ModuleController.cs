@@ -27,9 +27,18 @@ namespace Learn.Web.Areas.SystemManage.Controllers
         #region 获取数据
         public async Task<IActionResult> GetListJson()
         {
-            TData<List<ModuleEntity>> obj = await moduleBLL.GetList();
-            var a1 = obj.data[0].moduleButtons;
-            return Json(obj);
+            try
+            {
+
+                TData<List<ModuleEntity>> obj = await moduleBLL.GetList();
+                //var a1 = obj.data[0].moduleButtons;
+                return Json(obj);
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
         }
         #endregion 
 

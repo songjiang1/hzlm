@@ -9,5 +9,6 @@ namespace Learn.Dal.Model
         public string id { get; set; }
         public string pid { get; set; }
         public string title { get; set; }
+        public List<TreeModel> childs { get; set; } 
     }
 }

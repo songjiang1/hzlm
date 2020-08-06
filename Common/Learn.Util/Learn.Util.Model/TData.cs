@@ -16,12 +16,7 @@ namespace Learn.Util.Model
         /// 提示信息或异常信息
         /// </summary>
         public string msg { get; set; }
-
-
-        /// <summary>
-        /// 获取 返回数据
-        /// </summary>
-        public object data { get; set; }
+         
         /// <summary>
         /// 扩展Message
         /// </summary>

@@ -43,8 +43,12 @@ namespace Learn.Dal.Entity.SystemManage
         /// <summary>
         /// 菜单选项
         /// </summary>
-        public bool is_menu { set; get; }
-          
+        public bool is_menu { set; get; }  
+        /// <summary>
+        /// 菜单选项
+        /// </summary>
+        public bool is_enabled { set; get; }
+        
         /// <summary>
         /// 排序码
         /// </summary>

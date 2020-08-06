@@ -6,7 +6,8 @@ layui.define(['jquery'], function(exports) {
 		return {
 			top_value: 0,
 			primary_key: 'id',
-			parent_key: 'pid',
+			parent_key: 'parente_id',
+			primary_key_title: 'name',
 			hide_class: 'layui-hide',
 			icon: {
 				open: 'layui-icon layui-icon-triangle-d',
@@ -57,7 +58,11 @@ layui.define(['jquery'], function(exports) {
 			tbody += '<tr class="' + hide_class + '" data-id="' + item[e.primary_key] + '" data-pid="' + item[e.parent_key] + '">' + box + tr + '</tr>';
 		});
 		// 处理表树和树的赋值模板
+		if (e.data && e.data.length < 1) {
+			tbody += '<tr class="layui-none">无数据</tr>';
+		}
 		var table = is_table ? '<thead><tr data-id="' + e.top_value + '">' + thead + '</tr></thead><tbody>' + tbody + '</tbody>' : tbody.replace(/<tr/g, '<ul').replace(/tr>/g, 'ul>').replace(/<td/g, '<li').replace(/td>/g, 'li>');
+		
 		// 确认点击图标或点击列触发展开关闭
 		var click_btn = e.is_click_icon ? '[data-down] i:not(.layui-icon-ok)' : '[data-down]';
 		// 模板渲染并处理点击展开收起等功能
@@ -148,6 +153,11 @@ layui.define(['jquery'], function(exports) {
 	tree.prototype.data = function(e) {
 		var lists = [],
 			childs = [];
+		if (typeof (e.data) === "object") {
+			if (e.data.code === 200) {
+				e.data = e.data.data;
+			}
+		}
 		o.each(e.data, function(idx, item) {
 			lists[item[e.primary_key]] = item;
 			if(!childs[item[e.parent_key]]) {
@@ -175,8 +185,10 @@ layui.define(['jquery'], function(exports) {
 		var t = this;
 		e = o.extend(t.config(), e);
 		if(e.url) {
-			o.get(e.url, function(res) {
-				e.data = res;
+			o.get(e.url, function (res) {
+				if (res.code === 200) { 
+					e.data = res.data;
+				}
 				t.template(e);
 			})
 		} else {

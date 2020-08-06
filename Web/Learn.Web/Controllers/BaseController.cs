@@ -177,7 +177,7 @@ namespace Learn.Web.Controllers
             obj.code = code;
             obj.msg = code.ParseToEnumDescribe();
             return Json(obj);
-        }
+        } 
         /// <summary>
         /// 返回成功消息
         /// </summary>
@@ -189,8 +189,7 @@ namespace Learn.Web.Controllers
 
             TData obj = new TData();
             obj.code = HttpCodeEnum.OK;
-            obj.msg = message;
-            obj.data = data;
+            obj.msg = message; 
             return Json(obj);
         }
         /// <summary>
