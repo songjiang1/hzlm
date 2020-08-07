@@ -105,7 +105,17 @@
             layer.msg('选中参数' + treeTable.checked(re).join(','))
         })
          o('#toolbar a').click(function (e) {
-             debugger;
+             let but = $(this).attr("lay-event");
+             switch (switch_on) {
+                 case "add":
+                     break;
+                 case "edit":
+                     break;
+                 case "delete":
+                     break;
+                 default: break;
+             }
+
         })
        
     })

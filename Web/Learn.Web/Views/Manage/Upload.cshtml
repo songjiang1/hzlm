@@ -25,7 +25,7 @@
     <script src="@Url.Content("~/lib/layui2.5.5/layui/layui.js")"></script>
     <script>
         function initUpload(element, upload, options, callback) {
-            debugger;
+            
             var defaults = {
                 elem: '.UploadFile',
                 multiple: false,
@@ -41,7 +41,7 @@
                 },
                 done: function (res, index, upload) {
                     //上传完毕回调
-                    debugger;
+                    
                     if (res.code == 200) {
                         if (callback) {
                             callback(res, index, upload)
@@ -62,10 +62,10 @@
             base: '~/lib/layui2.5.5/layui/lay/modules/' //静态资源所在路径
         }).use(['form', 'upload'], function () {
             var $ = layui.$, form = layui.form, upload = layui.upload;
-            debugger;
+            
             initUpload(upload, { elem: '.UploadFile' }, function (res, index, upload) {
                 layer.msg(res.msg)
-                debugger;
+                
             })
             //        upload.render({
             //            elem: '.UploadFile' //绑定元素
@@ -75,7 +75,7 @@
             //           }
             //           , done: function (res, index, upload) {
             //               //上传完毕回调
-            //                debugger;
+            //                
             //               if (res.code ==200) {
             //                   //$('#FileName').val(res.name);
             //                   //$("#FileUrl").val(res.src);

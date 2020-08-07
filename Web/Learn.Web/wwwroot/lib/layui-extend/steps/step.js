@@ -2,7 +2,7 @@
     var $ = layui.jquery;
     var layer = layui.layer;
     var carousel = layui.carousel;
-    debugger;
+    
     // 添加步骤条dom节点
     var renderDom = function (elem, stepItems, postion) {
         var stepDiv = '<div class="lay-step">';

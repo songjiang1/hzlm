@@ -148,7 +148,7 @@
         <!-- 主体内容 -->
         <div class="layui-body" id="LAY_app_body">
             <div class="layadmin-tabsbody-item layui-show">
-                <iframe src="/home/index" frameborder="0" class="layadmin-iframe"></iframe>
+                <iframe id="LAY_Frame_iframe" src="/home/index" frameborder="0" class="layadmin-iframe"></iframe>
             </div>
         </div>
 
@@ -157,16 +157,7 @@
     </div>
 </div>
 
-<script src="@Url.Content("~/lib/learn/learn.index.js")"></script>
-<script>
-    $("#LAY-system-side-menu li a").click(function () {
-        let _herf = $(this).attr("lay-href");
-        if (_herf) {
-            $("#LAY_app_body iframe").attr("src",_herf);
-        }
-    })
-
-</script>
+<script src="@Url.Content("~/lib/learn/learn.index.js")"></script> 
 <script>
     // aggregation实现class类多继承
     debugger;
@@ -185,4 +176,10 @@
 
     })
     // 绑定所有工具api
+    $("#LAY-system-side-menu li a").click(function () {
+        let _herf = $(this).attr("lay-href");
+        if (_herf) {
+            $("#LAY_app_body iframe").attr("src",_herf);
+        }
+    })
 </script>
