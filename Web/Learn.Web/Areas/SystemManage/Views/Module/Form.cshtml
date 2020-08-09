@@ -98,49 +98,18 @@
                     </div>
                     <div>
                         <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">游戏ID:</label>
-                                <div class="layui-input-block">
-                                    <div class="layui-form-mid layui-word-aux">639537</div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">账户余额:</label>
-                                <div class="layui-input-block">
-                                    <div class="layui-form-mid layui-word-aux">3000 元（保险箱：1000，现金：2000）</div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">入款金额:</label>
-                                <div class="layui-input-block">
-                                    <div class="layui-form-mid layui-word-aux">
-                                        <span style="font-size: 18px;color: #333;">1800 元</span>
+                            <div class="layui-fluid">
+                                <div class="layui-card">
+                                    <div class="layui-card-body">
+                                        <table class="layui-table layui-form" id="tree-table-button" lay-size="sm-button"></table> 
                                     </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">入款类型:</label>
-                                <div class="layui-input-block">
-                                    <div class="layui-form-mid layui-word-aux">保险箱</div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">入款方式:</label>
-                                <div class="layui-input-block">
-                                    <div class="layui-form-mid layui-word-aux">人工入款</div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">备注说明:</label>
-                                <div class="layui-input-block">
-                                    <div class="layui-form-mid layui-word-aux">备注说明</div>
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
                                     <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
                                     <button class="layui-btn" lay-submit lay-filter="formStep2">
-                                        &emsp;确认入款&emsp;
+                                        &emsp;下一步&emsp;
                                     </button>
                                 </div>
                             </div>
@@ -197,16 +166,17 @@
 <script>
     layui.extend({
         step: '/lib/layui-extend/steps/step'
-    }).use(['form', 'step'], function () {
+    }).use(['form', 'step','table'], function () {
         var $ = layui.$
             , form = layui.form
-            , step = layui.step;
-
+            , step = layui.step 
+            , table = layui.table;
+        debugger;
         step.render({
             elem: '#stepForm',
             filter: 'stepForm',
             width: '100%', //设置容器宽度
-            stepWidth: '750px',
+            stepWidth: 'auto',
             height: '500px',
             stepItems: [{
                 title: '基础信息'
@@ -220,7 +190,25 @@
                 title: '数据接口'
             }]
         });
-
+        var table_button= table.render({
+             elem: '#tree-table-button', 
+             url:"/Enum/GetListJson?enumName=PageButtonEnum", 
+             contentType: 'application/json',
+             cols: [[
+                {type:'checkbox'},
+                { field:'id', hide: true},
+                { field: 'code',  title: '编码',  width: 100,},
+                { field: 'name', title: '名称',  width: 100, }, 
+             ]],
+             parseData: function (res) { //res 即为原始返回的数据
+                 debugger;
+                 return {
+                     "code": res.code===200?0:res.code, //解析接口状态
+                     "msg": res.msg, //解析提示文本 
+                     "data": res.data //解析数据列表
+                 };
+             }
+        });
 
         form.on('submit(formStep)', function (data) {
             step.next('#stepForm');

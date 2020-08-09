@@ -15,7 +15,21 @@ namespace Learn.Util.Enum
         [Description("启用")]
         Yes = 1
     }
-
+    public enum PageButtonEnum
+    {
+        [Description("查询")]
+        lr_look = 1, 
+        [Description("新增")]
+        lr_add = 2,
+        [Description("删除")]
+        lr_delete = 3,
+        [Description("修改")]
+        lr_edit = 4,
+        [Description("导入")]
+        lr_import = 5,
+        [Description("导出")]
+        lr_export = 6,
+    }
     public enum IsEnum
     {
         [Description("是")]

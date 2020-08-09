@@ -106,8 +106,11 @@
         })
          o('#toolbar a').click(function (e) {
              let but = $(this).attr("lay-event");
-             switch (switch_on) {
+             switch (but) {
                  case "add":
+                     learn.openDialog({
+                         content:"/SystemManage/Module/Form"
+                     });
                      break;
                  case "edit":
                      break;

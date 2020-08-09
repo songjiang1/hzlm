@@ -20,12 +20,10 @@ namespace Learn.Util.Enum
         Error = 404,
         [Description("接口错误")]
         InterfaceError = 201,
-        [Description("没有登录或登录已超时")]
-        LoginInvalid = 202,
-        [Description("查询成功")]
-        NoAuthority = 203,
+        [Description("系统内部错误,请联系管理员")]
+        SystemError = 201,
+
         [Description("抱歉，没有权限，请联系管理员")] 
-        
         LookSuccess = 211,
         [Description("添加成功")]
         InsertSuccess = 212,
@@ -42,7 +40,13 @@ namespace Learn.Util.Enum
         [Description("验证码为空")]
         VerificationCodeEmpty = 218,
         [Description("验证码错误")]
-        VerificationCodeError = 219,
+        VerificationCodeError = 219, 
+        [Description("没有登录或登录已超时")]
+        LoginInvalid = 220,
+        [Description("查询成功")]
+        NoAuthority = 221,
+        [Description("参数不能为空")]
+        ParameteNotEmpty = 222,
 
         #region 通用验证
 

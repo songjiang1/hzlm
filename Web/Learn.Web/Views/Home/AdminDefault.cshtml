@@ -157,12 +157,7 @@
     </div>
 </div>
 
-<script src="@Url.Content("~/lib/learn/learn.index.js")"></script> 
 <script>
-    // aggregation实现class类多继承
-    debugger;
-    class LearnCore extends aggregation(LearnIndex) { }
-    const learn = new LearnCore();
     layui.use(['form', 'tree', 'upload', 'element', 'laydate'], function () {
         learn.$ = layui.jquery;
         learn.upload = layui.upload;
