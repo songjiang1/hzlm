@@ -40,7 +40,10 @@
             treeTable = layui.treeTable;
         var re = treeTable.render({
             elem: '#tree-table',
-            url:"/SystemManage/Module/GetListJson",
+            url: "/SystemManage/Module/GetListJson",
+            primary_key: 'id',
+			parent_key: 'parente_id',
+			primary_key_title: 'name',
             icon_key: 'name',
             is_checkbox: true,
             end: function (e) {
