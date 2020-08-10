@@ -69,3 +69,20 @@
     text-align: center;
     color: #999
 }
+/*layer-extend*/
+
+.tree-treetable ul {
+    margin-top: 5px;
+}
+
+.tree-treetable li {
+    margin-top: 3px;
+}
+
+.tree-treetable .layui-form-switch {
+    margin-top: 0;
+} 
+.tree-treetable ul + ul {
+    border-top: 1px dashed #e2e2e2;
+}
+ 

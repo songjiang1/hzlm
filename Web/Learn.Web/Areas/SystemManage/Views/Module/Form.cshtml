@@ -26,10 +26,10 @@
                                     <div class="layui-input-block">
                                         <div class="layui-unselect layui-form-select">
                                             <div class="layui-select-title" style="position: relative;">
-                                                <input type="text" placeholder="请选择" value="" readonly="" class="layui-input layui-unselect">
+                                                <input type="text" placeholder="请选择" id="parente_id_text" name="parente_id_text" data-value="" readonly="" class="layui-input layui-unselect">
                                                 <i class="layui-edge"></i>
                                             </div>
-                                            <table class="layui-table layui-form layui-anim" id="tree-table-parent" lay-size="sm" style="display: none;"></table>
+                                            <table class="layui-table layui-form layui-anim tree-treetable" id="tree-treetable" lay-size="sm" style="display: none;"></table>
                                         </div>
                                     </div>
 
@@ -200,7 +200,7 @@
             }]
         });
         treeTable.render({
-            elem: '#tree-table-parent',
+            elem: '#tree-treetable',
             url: "/SystemManage/Module/GetListJson",
             icon_key: 'name',// 必须
             primary_key: 'id',
@@ -228,16 +228,22 @@
         $('.next').click(function () {
             step.next('#stepForm');
         });
-        $('#tree-table-parent').on('click', '[data-down]', function () {
+        $('#tree-treetable').on('click', 'li[data-down]', function () {
             debugger;
-            $(this).find('span').length && $(this).parents('.layui-unselect').find('input').val($(this).text());
+            $("#parente_id_text").val($(this).text()); 
+            $("#parente_id_text").attr("data-value",$(this).text());
+            $(this).find('span').length
+                && $(this).parents('.layui-unselect').find('input').val($(this).text());
         })
         $('.layui-select-title').click(function () {
             $(this).parent().hasClass('layui-form-selected') ? $(this).next().hide() : $(this).next().show(), $(this).parent().toggleClass('layui-form-selected');
         })
-        $(document).on("click", function (i) {
-            !$(i.target).parent().hasClass('layui-select-title') && !$(i.target).parents('table').length && !(!$(i.target).parents('table').length && $(i.target).hasClass('layui-icon')) && $(".layui-form-select").removeClass("layui-form-selected").find('.layui-anim').hide();
-        })
+        //$(document).on("click", function (i) {
+            //    !$(i.target).parent().hasClass('layui-select-title')
+            //&& !$(i.target).parents('table').length
+            //&& !(!$(i.target).parents('table').length && $(i.target).hasClass('layui-icon'))
+            //&& $(".layui-form-select").removeClass("layui-form-selected").find('.layui-anim').hide();
+        //})
     })
 
 </script>

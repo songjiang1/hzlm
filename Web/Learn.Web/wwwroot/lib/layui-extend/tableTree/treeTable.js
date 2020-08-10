@@ -26,7 +26,8 @@ layui.define(['jquery'], function (exports) {
 		var t = this,
 			level = [],
 			tbody = '',
-			is_table = e.is_checkbox,//o('table' + e.elem).length || !(e.is_click_icon = true),
+			//is_table = o('table' + e.elem).length || !(e.is_click_icon = true),
+			is_table = e.is_table, 
 			checkbox = e.is_checkbox ? '<div class="layui-unselect layui-form-checkbox cbx" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div>' : '',
 			checked = checkbox ? checkbox.replace('cbx', 'cbx layui-form-checked') : '',
 			thead = checkbox && '<th style="width:28px;">' + (o.inArray(e.top_value, e.checked.data) > -1 ? checked : checkbox) + '</th>';
@@ -53,7 +54,7 @@ layui.define(['jquery'], function (exports) {
 				var left = (obj.key == e.icon_key ? level[item[e.primary_key]] * e.icon.left + 'px' : '');
 				icon = icon.replace('>', ' style="margin-left:' + left + ';">');
 				// 拼接行
-				tr += '<td ' + style + (left ? 'data-down' : '') + '>' + icon + (is_table ? '' : (is_checked ? checked : checkbox)) + (obj.template ? obj.template(item) : item[obj.key]) + '</td>';
+				tr += '<td  ' + `data-id="${item[e.primary_key]}"` + style + (left ? 'data-down' : '') + '>' + icon + (is_table ? '' : (is_checked ? checked : checkbox)) + (obj.template ? obj.template(item) : item[obj.key]) + '</td>';
 			});
 			var box = is_table ? o(is_checked ? checked : checkbox).wrap('<td style="width:28px;">').parent().prop('outerHTML') : '';
 			tbody += '<tr class="' + hide_class + '" data-id="' + item[e.primary_key] + '" data-pid="' + item[e.parent_key] + '">' + box + tr + '</tr>';
