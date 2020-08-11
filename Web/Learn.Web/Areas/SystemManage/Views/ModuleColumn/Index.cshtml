@@ -23,7 +23,7 @@
         var $ = layui.$,
             form = layui.form,
             layer = layui.layer,
-            table = layui.table,
+            table = layui.table;
         var tab1 = table.render({
             elem: '#tree-table-column',
             url: "/SystemManage/Module/GetModuelColumnListJson",   
@@ -36,7 +36,8 @@
         });
          
     var $ = layui.$, active = {
-      add: function(){ //获取选中数据
+        add: function () { //获取选中数据
+            debugger;
         var checkStatus = table.checkStatus('tree-table-column')
         ,data = checkStatus.data;
         layer.alert(JSON.stringify(data));
