@@ -103,15 +103,9 @@
                             </div>
                         </form>
                     </div>
-                    <div>
-                        <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
-                            <div class="layui-fluid">
-                                <div class="layui-card">
-                                    <div class="layui-card-body">
-                                        <table class="layui-table layui-form" id="tree-table-button" lay-size="sm-button"></table>
-                                    </div>
-                                </div>
-                            </div>
+                    <div> 
+                        <form class="layui-form" style="margin: 0 auto;max-width: 720px;padding-top: 40px;">
+                            @Html.Partial("../ModuleButton/Index.cshtml")
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
                                     <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
@@ -123,46 +117,45 @@
                         </form>
                     </div>
                     <div>
-                        <div style="text-align: center;margin-top: 90px;">
-                            <i class="layui-icon layui-circle"
-                               style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
-                            <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
-                                入款成功
+
+                        <form class="layui-form" style="margin: 0 auto;max-width: 720px;padding-top: 40px;">
+                            @Html.Partial("../ModuleColumn/Index.cshtml")
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                    <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                        &emsp;下一步&emsp;
+                                    </button>
+                                </div>
                             </div>
-                            <div style="font-size: 14px;color: #666;margin-top: 20px;">预计两小时到账</div>
-                        </div>
-                        <div style="text-align: center;margin-top: 50px;">
-                            <button class="layui-btn next">再入一笔</button>
-                            <button class="layui-btn layui-btn-primary">查看账单</button>
-                        </div>
+                        </form>
                     </div>
                     <div>
-                        <div style="text-align: center;margin-top: 90px;">
-                            <i class="layui-icon layui-circle"
-                               style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
-                            <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
-                                入款成功
+
+                        <form class="layui-form" style="margin: 0 auto;max-width: 720px;padding-top: 40px;">
+                         @*   @Html.Partial("../ModuleForm/Index.cshtml")*@
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                    <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                        &emsp;下一步&emsp;
+                                    </button>
+                                </div>
                             </div>
-                            <div style="font-size: 14px;color: #666;margin-top: 20px;">预计两小时到账</div>
-                        </div>
-                        <div style="text-align: center;margin-top: 50px;">
-                            <button class="layui-btn next">再入一笔</button>
-                            <button class="layui-btn layui-btn-primary">查看账单</button>
-                        </div>
+                        </form>
                     </div>
                     <div>
-                        <div style="text-align: center;margin-top: 90px;">
-                            <i class="layui-icon layui-circle"
-                               style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
-                            <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
-                                入款成功
+                        <form class="layui-form" style="margin: 0 auto;max-width: 720px;padding-top: 40px;">
+                          @*  @Html.Partial("../ModuleInstance/Index.cshtml")*@
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                    <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                        &emsp;下一步&emsp;
+                                    </button>
+                                </div>
                             </div>
-                            <div style="font-size: 14px;color: #666;margin-top: 20px;">预计两小时到账</div>
-                        </div>
-                        <div style="text-align: center;margin-top: 50px;">
-                            <button class="layui-btn next">再入一笔</button>
-                            <button class="layui-btn layui-btn-primary">查看账单</button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -181,6 +174,7 @@
             , table = layui.table
             , treeTable = layui.treeTable;
         debugger;
+        //步骤初始化
         step.render({
             elem: '#stepForm',
             filter: 'stepForm',
@@ -199,6 +193,7 @@
                 title: '数据接口'
             }]
         });
+        //上一级初始化
         treeTable.render({
             elem: '#tree-treetable',
             url: "/SystemManage/Module/GetListJson",
@@ -210,7 +205,25 @@
             cols: [{ key: 'name', title: '名称', }],
 
         })
-
+        //按钮 初始化
+        table.render({
+            elem: '#tree-table-button',
+            url:"/Enum/GetListJson?enumName=PageButtonEnum", 
+            cols: [[
+                 {type:'checkbox'},
+                { field: 'id',  hide: true},
+                { field: 'code',  title: '编码',  width: 100},
+                { field: 'name', title: '名称'}, 
+            ]],
+            parseData: function (res) { //res 即为原始返回的数据
+                debugger;
+                return {
+                    "code": res.code===200?0:res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本 
+                    "data": res.data //解析数据列表
+                };
+            }
+        });
         form.on('submit(formStep)', function (data) {
             step.next('#stepForm');
             return false;

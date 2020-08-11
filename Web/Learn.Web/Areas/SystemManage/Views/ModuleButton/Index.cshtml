@@ -1,8 +1,5 @@
 ﻿
-@{
-    ViewBag.Title = "系统按钮";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 <div class="layui-fluid">
     <div class="layui-card"> 
         <div class="layui-card-body"> 
@@ -17,15 +14,21 @@
         table.render({
             elem: '#tree-table-button',
             url:"/Enum/GetListJson?enumName=PageButtonEnum", 
-            cols: [
-                {type:'checkbox'},
-                { key: 'text',  title: '编码',  width: '100px',},
-                { key: 'desction', title: '名称',  width: '100px', },
-                { key: 'value',title: '排序码',width: '100px',},  
-            ]
+            cols: [[
+                 {type:'checkbox'},
+                { field: 'id',  hide: true},
+                { field: 'code',  title: '编码',  width: 100},
+                { field: 'name', title: '名称'}, 
+            ]],
+            parseData: function (res) { //res 即为原始返回的数据
+                debugger;
+                return {
+                    "code": res.code===200?0:res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本 
+                    "data": res.data //解析数据列表
+                };
+            }
         });
-          
-       
     })
 </script>
 
