@@ -46,6 +46,35 @@ class LearnCommon {
             }
         });
     }
+    //提示框
+    confirm(content, option) {
+        var _option = $.extend({
+            icon: 3,
+            title: "系统提示",
+            btn: ['确认', '取消'],
+            btnclass: ['btn btn-primary', 'btn btn-danger'], 
+            callback:null
+        }, option);
+        layer.confirm(content, _option, function (index) {
+            layer.close(index);
+            if (_option.callback) {
+                _option.callback(true);
+            }
+        }); 
+    }
+    //提示框
+    msg(msg) { 
+        layer.msg(msg);
+    } 
+    /**
+     * 获取Guid字符串
+     * */
+    getGuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
     //#endregion 通用
     isMobile() {
         return navigator.userAgent.match(/(Android|iPhone|SymbianOS|Windows Phone|iPad|iPod)/i);

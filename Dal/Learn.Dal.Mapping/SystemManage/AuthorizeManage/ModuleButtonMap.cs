@@ -12,7 +12,9 @@ namespace Learn.Dal.Mapping
     {
         public override void Map(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ModuleButtonEntity>().ToTable("sys_module_button").HasKey(_ => _.id); 
+            modelBuilder.Entity<ModuleButtonEntity>().ToTable("sys_module_button").HasKey(_ => _.id);
+            // 关系配置 
+            modelBuilder.Entity<ModuleButtonEntity>().HasOne(p => p.moduleEntity).WithMany(b =>b.moduleButtons).HasForeignKey(p => p.module_id);
         }
     }
 }

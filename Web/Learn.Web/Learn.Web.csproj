@@ -36,6 +36,17 @@
     <ProjectReference Include="..\Learn.Web.Code\Learn.Web.Code.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Areas\SystemManage\Views\ModuleForm\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\SystemManage\Views\ModuleInstance\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 
 
 </Project>

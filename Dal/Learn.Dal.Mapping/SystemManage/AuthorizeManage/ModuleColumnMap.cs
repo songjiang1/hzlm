@@ -13,6 +13,9 @@ namespace Learn.Dal.Mapping.SystemManage
         public override void Map(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ModuleColumnEntity>().ToTable("sys_module_column").HasKey(_ => _.id);
+            //一对多
+            modelBuilder.Entity<ModuleColumnEntity>().HasOne(p => p.moduleEntity).WithMany(b => b.moduleColumns).HasForeignKey(p => p.module_id);
+
         }
     }
 }

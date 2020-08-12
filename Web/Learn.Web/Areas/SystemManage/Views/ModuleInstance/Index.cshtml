@@ -8,11 +8,10 @@
                 <div class="layui-card-header">数据操作</div>
                 <div class="layui-card-body">
                     <div class="layui-btn-group test-table-operate-btn" style="margin-bottom: 10px;">
-                        <button class="layui-btn" data-type="add">增加</button>
-                        <button class="layui-btn" data-type="delete">删除</button> 
+                        <a class="layui-btn" data-type="add">增加</a>
+                        <a class="layui-btn" data-type="delete">删除</a>
                     </div>
-
-                    <table class="layui-hide" id="tree-table-column" lay-filter="test-table-operate"></table> 
+                    <table class="layui-hide" id="tree-table-column" lay-filter="tree-table-column"></table>
                 </div>
             </div>
         </div>
@@ -23,38 +22,54 @@
         var $ = layui.$,
             form = layui.form,
             layer = layui.layer,
-            table = layui.table,
-        var tab1 = table.render({
+            table = layui.table;
+        tables = table.render({
             elem: '#tree-table-column',
-            url: "/SystemManage/Module/GetModuelColumnListJson",   
-            cols: [
-                { key: 'name', title: '名称', width: '100px', },
-                { key: 'code', title: '编码', width: '100px', },
-                { key: 'url_address', title: '导航地址', width: '100px', },
-                { key: 'target', title: '导航目标', width: '100px', align: '', }, 
-            ]
+            url: "/SystemManage/Module/GetModuelColumnListJson",
+            cols: [[
+                { type: 'checkbox' },
+                { field: 'code', title: '编码', width: 200, edit: true },
+                { field: 'name', title: '名称', width: 200, edit: true },
+                { field: 'sort_code', title: '排序码', edit: true },
+            ]],
+            parseData: function (res) { //res 即为原始返回的数据
+                
+                return {
+                    "code": res.code === 200 ? 0 : res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "data": res.data //解析数据列表
+                };
+            },
         });
-         
-    var $ = layui.$, active = {
-      add: function(){ //获取选中数据
-        var checkStatus = table.checkStatus('tree-table-column')
-        ,data = checkStatus.data;
-        layer.alert(JSON.stringify(data));
-      }
-      ,delete: function(){ //获取选中数目
-        var checkStatus = table.checkStatus('tree-table-column')
-        ,data = checkStatus.data;
-        layer.msg('选中了：'+ data.length + ' 个');
-      } 
-    };
-    
-    $('.test-table-operate-btn .layui-btn').on('click', function(){
-      var type = $(this).data('type');
-      active[type] ? active[type].call(this) : '';
-    });
-  
 
-        
+        active = {
+            add: function () { //获取选中数据
+                var oldData = table.cache["tree-table-column"];
+                var data1 = { "id": learn.getGuid(), "code": "", "name": "", "sort_code": 0 }
+                oldData.push(data1);
+                table.reload('tree-table-column', { data: oldData, url: null });
+            },
+            delete: function () { //获取选中数目
+                
+                var checkStatus = table.checkStatus('tree-table-column');
+                var checkData = checkStatus.data;
+                if (checkData.length < 1) {
+                    learn.msg("请选择至少一行");
+                } else {
+                    var oldData = table.cache["tree-table-column"];
+                    var data = oldData.filter(x => { return checkData.map(p => { return p.id }).indexOf(x.id) === -1 });
+                    table.reload('tree-table-column', { data: data, url: null });
+                } 
+            }
+        };
+
+        $('.test-table-operate-btn .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+
 
     })
 </script>

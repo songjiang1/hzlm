@@ -173,7 +173,7 @@
             , step = layui.step
             , table = layui.table
             , treeTable = layui.treeTable;
-        debugger;
+        
         //步骤初始化
         step.render({
             elem: '#stepForm',
@@ -216,7 +216,7 @@
                 { field: 'name', title: '名称'}, 
             ]],
             parseData: function (res) { //res 即为原始返回的数据
-                debugger;
+                
                 return {
                     "code": res.code===200?0:res.code, //解析接口状态
                     "msg": res.msg, //解析提示文本 
@@ -242,7 +242,7 @@
             step.next('#stepForm');
         });
         $('#tree-treetable').on('click', 'li[data-down]', function () {
-            debugger;
+            
             $("#parente_id_text").val($(this).text()); 
             $("#parente_id_text").attr("data-value",$(this).text());
             $(this).find('span').length

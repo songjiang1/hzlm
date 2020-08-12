@@ -31,7 +31,7 @@ namespace Learn.Dal.Busines.SystemManage
         public async Task<TData<List<ModuleInstanceEntity>>> GetList(string moduleId)
         {
             TData<List<ModuleInstanceEntity>> obj = new TData<List<ModuleInstanceEntity>>();
-            var exp = LinqExtensions.True<ModuleButtonEntity>();
+            var exp = LinqExtensions.True<ModuleInstanceEntity>();
             if (string.IsNullOrWhiteSpace(moduleId))
             {
                 exp = exp.And(t => t.module_id.Contains(moduleId));
