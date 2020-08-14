@@ -4,12 +4,11 @@
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
-            <div class="layui-card">
-                <div class="layui-card-header">数据操作</div>
-                <div class="layui-card-body">
+            <div class="layui-card"> 
+                <div style="padding-bottom: 10px;">
                     <div class="layui-btn-group test-table-operate-btn" style="margin-bottom: 10px;">
-                        <a class="layui-btn" data-type="add">增加</a>
-                        <a class="layui-btn" data-type="delete">删除</a>
+                        <a class="layui-btn layui-btn-sm" data-type="lr_add">增加</a>
+                        <a class="layui-btn layui-btn-sm" data-type="lr_delete">删除</a>
                     </div>
                     <table class="layui-hide" id="tree-table-column" lay-filter="tree-table-column"></table>
                 </div>
@@ -30,7 +29,7 @@
                 { type: 'checkbox' },
                 { field: 'code', title: '编码', width: 200, edit: true },
                 { field: 'name', title: '名称', width: 200, edit: true },
-                { field: 'sort_code', title: '排序码', edit: true },
+                { field: 'sort_code', title: '排序码', width: 100, edit: true },
             ]],
             parseData: function (res) { //res 即为原始返回的数据
                 
@@ -43,13 +42,13 @@
         });
 
         active = {
-            add: function () { //获取选中数据
+            lr_add: function () { //获取选中数据
                 var oldData = table.cache["tree-table-column"];
                 var data1 = { "id": learn.getGuid(), "code": "", "name": "", "sort_code": 0 }
                 oldData.push(data1);
                 table.reload('tree-table-column', { data: oldData, url: null });
             },
-            delete: function () { //获取选中数目
+            lr_delete: function () { //获取选中数目
                 
                 var checkStatus = table.checkStatus('tree-table-column');
                 var checkData = checkStatus.data;
